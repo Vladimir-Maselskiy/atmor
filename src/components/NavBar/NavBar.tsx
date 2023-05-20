@@ -17,8 +17,10 @@ export const NavBar = () => {
         <HomeFilled />
       </StyledLink>
       <StyledLink href="/home">ЧОМУ ATMOR</StyledLink>
-      <StyledLink href="/home">ЗАСТОСУНОК</StyledLink>
-      <StyledLink href="/home">ІНСТРУКЦІЇ</StyledLink>
+      <StyledLink href="/description">ЗАСТОСУНОК</StyledLink>
+      <StyledLink href="/instruction">ІНСТРУКЦІЇ</StyledLink>
+      <StyledLink href="/service">СЕРВІС</StyledLink>
+      <StyledLink href="/contacts">КОНТАКТИ</StyledLink>
     </Box>
   );
 };
