@@ -1,8 +1,13 @@
-import { Logo } from '@/components/Logo/Logo';
+'use client';
+import { Logo, LogoText } from '@/components/Logo/Logo';
 import './globals.css';
 import { Inter } from 'next/font/google';
+import { Box } from '@/components/Box/Box';
 
 const inter = Inter({ subsets: ['latin'] });
+
+import { ConfigProvider, Layout } from 'antd';
+import { NavBar } from '@/components/NavBar/NavBar';
 
 export const metadata = {
   title: 'Create Next App',
@@ -17,7 +22,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Logo />
+        <Layout style={{ minWidth: 290, width: '100%' }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-around"
+            padding="0 20px"
+          >
+            <Logo />
+            <LogoText />
+          </Box>
+          <NavBar />
+        </Layout>
+
         <h1>{children}</h1>
       </body>
     </html>

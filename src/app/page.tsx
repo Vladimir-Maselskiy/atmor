@@ -1,7 +1,7 @@
-export default function Home2() {
+export default function Home() {
   return (
     <main>
-      <p>Get started</p>
+      <p>CONTENT</p>
     </main>
   );
 }
