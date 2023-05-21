@@ -8,6 +8,7 @@ import {
   typography,
   border,
   position,
+  background,
   ColorProps,
   LayoutProps,
   FlexboxProps,
@@ -16,6 +17,7 @@ import {
   TypographyProps,
   BorderProps,
   PositionProps,
+  BackgroundProps,
   gridGap,
 } from 'styled-system';
 
@@ -27,7 +29,8 @@ interface Props
     SpaceProps,
     TypographyProps,
     BorderProps,
-    GridGapProps {
+    GridGapProps,
+    BackgroundProps {
   children: React.ReactNode;
 }
 
@@ -39,5 +42,6 @@ export const Box = styled('div')<Props>(
   typography,
   border,
   position,
-  gridGap
+  gridGap,
+  background
 );
