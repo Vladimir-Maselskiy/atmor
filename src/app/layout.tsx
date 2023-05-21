@@ -25,9 +25,11 @@ export default function RootLayout({
         <Layout style={{ minWidth: 290, width: '100%' }}>
           <Box
             display="flex"
+            position="relative"
             alignItems="center"
             justifyContent="space-around"
             padding="0 20px"
+            minHeight={80}
           >
             <Logo />
             <LogoText />
@@ -35,7 +37,7 @@ export default function RootLayout({
           <NavBar />
         </Layout>
 
-        <h1>{children}</h1>
+        <>{children}</>
       </body>
     </html>
   );

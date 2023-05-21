@@ -6,7 +6,12 @@
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
   --accent-color: rgb(220, 1, 50);
+  --text-color: rgb(88, 88, 90);
+
   --white-color: rgb(255, 255, 255);
+
+  --swiper-pagination-color: var(--accent-color);
+  --swiper-navigation-color: var(--text-color);
 }
 
 * {
@@ -22,7 +27,7 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: var(--text-color);
   background: linear-gradient(
       to bottom,
       transparent,
