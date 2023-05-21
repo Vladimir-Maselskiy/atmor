@@ -28,7 +28,7 @@ export const StyledImage = styled.img<Props>`
 
 export const StyledWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   padding: 30px 0;
   background-image: url('/home-solutions-bg.png');
@@ -36,13 +36,18 @@ export const StyledWrapper = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   border-top: 35px solid var(--accent-color);
-  gap: 80px;
+  gap: 20px;
   & > p:nth-of-type(2) {
     color: var(--accent-color);
+    text-align: left;
   }
 `;
 export const StyledSolutionText = styled.p`
   font-size: 50px;
   font-weight: 600;
-  min-width: 350px;
+  min-width: 300px;
+  text-align: end;
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 `;
