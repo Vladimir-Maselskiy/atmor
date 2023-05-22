@@ -1,0 +1,35 @@
+{
+  "products": [
+    {
+      "options": {
+        "article": "3195295",
+        "price": 3855,
+        "country": "iзраїль",
+        "productivity": 3,
+        "power": 5,
+        "firstPhoto": "/products/basic210/3"
+      },
+      "aditional": {
+        "brand": "atmor",
+        "type": "несистемний",
+        "insalation": "настінний",
+        "supplyVoltage": 220,
+        "height": 18,
+        "width": 29,
+        "depth": 10,
+        "model": "basic-210",
+        "using": "для ванни, для душу",
+        "appointment": "побутові, для дачі, для дому, для квартири",
+        "color": "білий",
+        "weight": 2,
+        "completeSet": " електричний водонагрівач, душова насадка, шланг, інструкція",
+        "quarantee": 12,
+        "photos": [
+          "/products/basic210/1",
+          "/products/basic210/2",
+          "/products/basic210/3"
+        ]
+      }
+    }
+  ]
+}

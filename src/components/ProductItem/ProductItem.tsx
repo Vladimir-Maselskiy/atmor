@@ -16,7 +16,11 @@ export const ProductItem = () => {
   return (
     <Box display="flex">
       <Box>
-        <img src="/products/basic210/7132517_3.jpeg" width={400} />
+        <img
+          src="/products/basic210/7132517_3.jpeg"
+          alt={`Basic-210 photo`}
+          width={400}
+        />
       </Box>
       <Box lineHeight={1.5} flexGrow={1} paddingTop={40}>
         <Box marginLeft={16}>
