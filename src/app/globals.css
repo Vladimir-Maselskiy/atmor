@@ -6,7 +6,8 @@
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
   --accent-color: rgb(220, 1, 50);
-  --text-color: rgb(88, 88, 90);
+  /* --text-color: rgb(88, 88, 90); */
+  --text-color: rgb(0, 0, 0);
 
   --white-color: rgb(255, 255, 255);
 

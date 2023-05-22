@@ -35,7 +35,7 @@ export const StyledWrapper = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border-top: 35px solid var(--accent-color);
+  border-top: 10px solid var(--accent-color);
   gap: 20px;
   & > p:nth-of-type(2) {
     color: var(--accent-color);
