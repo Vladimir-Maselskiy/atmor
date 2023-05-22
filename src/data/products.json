@@ -4,16 +4,17 @@
       "options": {
         "article": "3195295",
         "price": 3855,
-        "country": "iзраїль",
+        "name": "Електроводонагрівач проточний Atmor Basic-210 з душовою насадкою 5 кВт",
+        "country": "Ізраїль",
         "productivity": 3,
         "power": 5,
-        "firstPhoto": "/products/basic210/3"
+        "firstPhoto": "/products/basic210/3.jpeg"
       },
       "aditional": {
         "brand": "atmor",
         "type": "несистемний",
         "insalation": "настінний",
-        "supplyVoltage": 220,
+        "supplyVoltage": "220",
         "height": 18,
         "width": 29,
         "depth": 10,
@@ -25,9 +26,138 @@
         "completeSet": " електричний водонагрівач, душова насадка, шланг, інструкція",
         "quarantee": 12,
         "photos": [
-          "/products/basic210/1",
-          "/products/basic210/2",
-          "/products/basic210/3"
+          "/products/basic210/1.jpeg",
+          "/products/basic210/2.jpeg",
+          "/products/basic210/3.jpeg"
+        ]
+      }
+    },
+    {
+      "options": {
+        "article": "3195571",
+        "price": 63922,
+        "name": "Електроводонагрівач проточний Atmor In Line 800 7 кВт",
+        "country": "Ізраїль",
+        "productivity": 4,
+        "power": 7,
+        "firstPhoto": "/products/inline800/1.jpeg"
+      },
+      "aditional": {
+        "brand": "atmor",
+        "type": "системний",
+        "insalation": "підмийкою, над мийкою, настінний",
+        "supplyVoltage": "220",
+        "height": 22,
+        "width": 30,
+        "depth": 11,
+        "model": "In Line 800",
+        "using": "для ванни, для душу, для кухні",
+        "appointment": " побутові, для дачі, для дому, для квартири, промисловий",
+        "color": "білий",
+        "weight": 2,
+        "completeSet": " електричний водонагрівач, інструкція",
+        "quarantee": 12,
+        "photos": [
+          "/products/inline800/1.jpeg",
+          "/products/inline800/2.jpeg",
+          "/products/inline800/3.jpeg"
+        ]
+      }
+    },
+    {
+      "options": {
+        "article": "3195570",
+        "price": 6169,
+        "name": "Електроводонагрівач проточний Atmor In Line 800 5 кВт",
+        "country": "Ізраїль",
+        "productivity": 3,
+        "power": 5,
+        "firstPhoto": "/products/inline800/2.jpeg"
+      },
+      "aditional": {
+        "brand": "atmor",
+        "type": "системний",
+        "insalation": "під мийкою, над мийкою, настінний",
+        "supplyVoltage": "220",
+        "height": 22,
+        "width": 30,
+        "depth": 11,
+        "model": "In Line 800",
+        "using": "для ванни, для душу, для кухні",
+        "appointment": " побутові, для дачі, для дому, для квартири",
+        "color": "білий",
+        "weight": 2,
+        "completeSet": " електричний водонагрівач, інструкція",
+        "quarantee": 12,
+        "photos": [
+          "/products/inline800/1.jpeg",
+          "/products/inline800/2.jpeg",
+          "/products/inline800/3.jpeg"
+        ]
+      }
+    },
+    {
+      "options": {
+        "article": "8ETFNB33HT",
+        "price": 3099,
+        "name": "Електроводонагрівач проточний Atmor Hotap нікельований 3,3 кВт 8ETFNB33HT",
+        "country": "Ізраїль",
+        "productivity": 1.6,
+        "power": 3.3,
+        "firstPhoto": "/products/hotap/3.jpeg"
+      },
+      "aditional": {
+        "brand": "atmor",
+        "type": "несистемний",
+        "insalation": "на мийку",
+        "supplyVoltage": "230",
+        "height": 26.35,
+        "width": 20.72,
+        "depth": 6.45,
+        "model": "Hotap",
+        "using": "для кухні",
+        "appointment": "побутові",
+        "color": "сірий",
+        "weight": 1.7,
+        "completeSet": "шланг для подачі води ½&quot;",
+        "quarantee": 12,
+        "photos": [
+          "/products/hotap/1.jpeg",
+          "/products/hotap/2.jpeg",
+          "/products/hotap/3.jpeg",
+          "/products/hotap/4.jpeg"
+        ]
+      }
+    },
+    {
+      "options": {
+        "article": "8ETFWH33HT",
+        "price": 2499,
+        "name": "Електроводонагрівач проточний Atmor Hotap білий 3,3 кВт ",
+        "country": "Ізраїль",
+        "productivity": 1.6,
+        "power": 3.3,
+        "firstPhoto": "/products/hotapwh/1.jpeg"
+      },
+      "aditional": {
+        "brand": "atmor",
+        "type": "несистемний",
+        "insalation": "на мийку",
+        "supplyVoltage": "230",
+        "height": 26.35,
+        "width": 20.72,
+        "depth": 6.45,
+        "model": "Hotap",
+        "using": "для кухні",
+        "appointment": "побутові",
+        "color": "білий",
+        "weight": 1.7,
+        "completeSet": "шланг для подачі води ½&quot;",
+        "quarantee": 12,
+        "photos": [
+          "/products/hotap/1.jpeg",
+          "/products/hotap/2.jpeg",
+          "/products/hotap/3.jpeg"
         ]
       }
     }
