@@ -4,6 +4,7 @@ import { Box } from '../Box/Box';
 import { Collapse, Divider, Descriptions, Button } from 'antd';
 import { ModelName, PanelText } from './ProductItem.styled';
 import { IAtmorItem } from '@/interfaces/interfaces';
+import { width } from 'styled-system';
 
 const { Panel } = Collapse;
 
@@ -22,17 +23,26 @@ export const ProductItem = ({ product }: TProps) => {
           width={400}
         />
       </Box>
-      <Box lineHeight={1.5} flexGrow={1} paddingTop={40}>
+      <Box lineHeight={1.5} paddingTop={40}>
         <Box marginLeft={16}>
-          <p>
-            Ціна:<span>{options.price}</span>
-          </p>
+          <p>{options.price} грн</p>
           <Button>Купити</Button>
           <ModelName>{aditional.model}</ModelName>
           <p>{options.name}</p>
         </Box>
-        <Collapse expandIconPosition="end" ghost style={{ marginTop: 20 }}>
-          <Panel header="ХАРАКТЕРИСТИКИ" key="1" style={{ fontSize: 24 }}>
+        <Collapse
+          // expandIconPosition="end"
+          ghost
+          style={{ marginTop: 20, maxWidth: 300 }}
+          size="large"
+        >
+          <Panel
+            header="ХАРАКТЕРИСТИКИ"
+            key="1"
+            style={{
+              width: 600,
+            }}
+          >
             <Descriptions title="Основні характеристики" column={1}>
               <Descriptions.Item label="Країна-вирбник">
                 {options.country}
@@ -52,7 +62,6 @@ export const ProductItem = ({ product }: TProps) => {
             </Descriptions>
           </Panel>
         </Collapse>
-        <Divider />
       </Box>
     </Box>
   );
