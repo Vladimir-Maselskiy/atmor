@@ -13,7 +13,7 @@ export const NavBar = () => {
       justifyContent="center"
       backgroundColor="var(--accent-color)"
     >
-      <StyledLink href="/home">
+      <StyledLink href="/">
         <HomeFilled />
       </StyledLink>
       <StyledLink href="/products">ПРОДУКТИ</StyledLink>

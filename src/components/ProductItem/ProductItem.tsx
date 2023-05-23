@@ -29,7 +29,7 @@ export const ProductItem = ({ product }: TProps) => {
           </p>
           <Button>Купити</Button>
           <ModelName>{aditional.model}</ModelName>
-          <p>Підігрівач з душовою насадкою</p>
+          <p>{options.name}</p>
         </Box>
         <Collapse expandIconPosition="end" ghost style={{ marginTop: 20 }}>
           <Panel header="ХАРАКТЕРИСТИКИ" key="1" style={{ fontSize: 24 }}>
