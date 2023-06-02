@@ -2,9 +2,10 @@
 import React from 'react';
 import { Box } from '../Box/Box';
 import { Collapse, Divider, Descriptions, Button } from 'antd';
-import { ModelName, PanelText } from './ProductItem.styled';
+import { ModelName, PanelText, StyledPrice } from './ProductItem.styled';
 import { IAtmorItem } from '@/interfaces/interfaces';
 import { width } from 'styled-system';
+import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
 
 const { Panel } = Collapse;
 
@@ -25,17 +26,14 @@ export const ProductItem = ({ product }: TProps) => {
       </Box>
       <Box lineHeight={1.5} paddingTop={40}>
         <Box marginLeft={16}>
-          <p>{options.price} грн</p>
+          <StyledPrice>
+            {getPriceSpacesFormatted(options.price)} грн
+          </StyledPrice>
           <Button>Купити</Button>
           <ModelName>{aditional.model}</ModelName>
           <p>{options.name}</p>
         </Box>
-        <Collapse
-          // expandIconPosition="end"
-          ghost
-          style={{ marginTop: 20, maxWidth: 300 }}
-          size="large"
-        >
+        <Collapse ghost style={{ marginTop: 20, maxWidth: 300 }} size="large">
           <Panel
             header="ХАРАКТЕРИСТИКИ"
             key="1"
@@ -44,14 +42,14 @@ export const ProductItem = ({ product }: TProps) => {
             }}
           >
             <Descriptions title="Основні характеристики" column={1}>
-              <Descriptions.Item label="Країна-вирбник">
+              <Descriptions.Item label="Країна-виробник">
                 {options.country}
               </Descriptions.Item>
               <Descriptions.Item label="Продуктивність (ΔТ=25°C)">
                 {`${options.productivity} л.хв`}
               </Descriptions.Item>
               <Descriptions.Item label="Потужність">
-                {`${options.power} кВт`}{' '}
+                {`${options.power} кВт`}
               </Descriptions.Item>
               <Descriptions.Item label="Напруга живлення">
                 {`${aditional.supplyVoltage}В`}
