@@ -1,13 +1,12 @@
 'use client';
-import { Logo, LogoText } from '@/components/Logo/Logo';
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { Box } from '@/components/Box/Box';
 
 const inter = Inter({ subsets: ['latin'] });
 
-import { ConfigProvider, Layout } from 'antd';
-import { NavBar } from '@/components/NavBar/NavBar';
+import { Layout } from 'antd';
+import { Header } from '@/components/Header/Header';
+import { CartWrapper } from '@/context/state';
 
 // export const metadata = {
 //   title: 'Create Next App',
@@ -21,24 +20,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Layout style={{ minWidth: 290, width: '100%' }}>
-          <Box
-            display="flex"
-            position="relative"
-            alignItems="center"
-            justifyContent="space-around"
-            padding="0 20px"
-            minHeight={80}
-          >
-            <Logo />
-            <LogoText />
-          </Box>
-          <NavBar />
-        </Layout>
-
-        <>{children}</>
-      </body>
+      <CartWrapper>
+        <body className={inter.className}>
+          <Layout style={{ minWidth: 290, width: '100%' }}>
+            <Header />
+            {children}
+          </Layout>
+        </body>
+      </CartWrapper>
     </html>
   );
 }

@@ -7,7 +7,7 @@ import { marginLeft } from 'styled-system';
 
 export const Logo = () => {
   return (
-    <Link href="/" style={{ position: 'absolute', left: '0px', top: '0px' }}>
+    <Link href="/">
       <Image
         src="/logo-removebg.png"
         alt="logo"

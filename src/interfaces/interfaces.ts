@@ -26,3 +26,8 @@ export interface IAtmorItem {
     photos: string[];
   };
 }
+
+export interface ICartItem {
+  product: IAtmorItem;
+  quantity: number;
+}
