@@ -1,11 +1,10 @@
 'use client';
+import { ProductList } from '../../components/ProductList/ProductList';
 
-import { ProductListItem } from '@/components/ProductListItem/ProductListItem';
-
-export default function Home() {
+export default function ProductsPage() {
   return (
     <main>
-      <ProductListItem />
+      <ProductList />
     </main>
   );
 }

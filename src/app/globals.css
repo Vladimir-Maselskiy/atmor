@@ -6,7 +6,7 @@
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
   --accent-color: rgb(220, 1, 50);
-  /* --text-color: rgb(88, 88, 90); */
+  --grey-background-color: rgb(245, 245, 245);
   --text-color: rgb(0, 0, 0);
 
   --white-color: rgb(255, 255, 255);
@@ -40,4 +40,8 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+li {
+  list-style: none;
 }

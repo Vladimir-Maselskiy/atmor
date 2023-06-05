@@ -1,8 +1,8 @@
 'use client';
-import { useCartContext } from '@/context/state';
-import React, { useCallback } from 'react';
+import { Cart } from '@/components/Cart/Cart';
 
-export default function Cart() {
-  const { cart } = useCartContext();
-  return cart.length > 0 ? <div>page</div> : null;
+import React from 'react';
+
+export default function CartPage() {
+  return <Cart />;
 }

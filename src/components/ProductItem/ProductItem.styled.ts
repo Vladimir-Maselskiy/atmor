@@ -11,3 +11,7 @@ export const StyledPrice = styled.p`
   font-size: 32px;
   color: var(--accent-color);
 `;
+
+export const StyledItem = styled.li`
+  margin: 0 auto;
+`;

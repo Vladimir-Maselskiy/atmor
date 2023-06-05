@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <CartWrapper>
         <body className={inter.className}>
-          <Layout style={{ minWidth: 290, width: '100%' }}>
+          <Layout style={{ minWidth: 290, width: '100%', minHeight: '100vh' }}>
             <Header />
             {children}
           </Layout>

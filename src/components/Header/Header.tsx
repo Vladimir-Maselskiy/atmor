@@ -6,13 +6,18 @@ import { NavCart } from '../NavCart/NavCart';
 
 export const Header = () => {
   return (
-    <>
+    <Box
+      width="100vw"
+      position="fixed"
+      zIndex={2}
+      backgroundColor="var(--grey-background-color)"
+    >
       <Box
         display="flex"
         position="relative"
         alignItems="center"
         justifyContent="space-between"
-        padding="0 20px"
+        padding="0 25px 0 20px"
         minHeight={80}
       >
         <Logo />
@@ -20,6 +25,6 @@ export const Header = () => {
         <NavCart />
       </Box>
       <NavBar />
-    </>
+    </Box>
   );
 };
