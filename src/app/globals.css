@@ -13,6 +13,8 @@
 
   --swiper-pagination-color: var(--accent-color);
   --swiper-navigation-color: var(--text-color);
+
+  --max-container-width: 1440px;
 }
 
 * {

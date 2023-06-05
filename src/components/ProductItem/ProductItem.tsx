@@ -25,7 +25,7 @@ export const ProductItem = ({ product }: TProps) => {
   const { cart, setCart } = useCartContext();
   const onBuyButtonCkick = () => {
     const index = cart.findIndex(item => {
-      item.product.options.article === product.options.article;
+      return item.product.options.article === options.article;
     });
     if (index === -1) {
       setCart(prev => [...prev, { product, quantity: 1 }]);
@@ -52,7 +52,7 @@ export const ProductItem = ({ product }: TProps) => {
             style={{ objectFit: 'contain', objectPosition: 'center' }}
           />
         </Box>
-        <Box lineHeight={1.5} paddingTop={40}>
+        <Box lineHeight={1.5} paddingTop={40} width={500}>
           <Box marginLeft={116}>
             <StyledPrice>
               {getPriceSpacesFormatted(options.price)} грн
