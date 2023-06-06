@@ -1,5 +1,5 @@
 import { ICartItem } from '@/interfaces/interfaces';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { ModelName, StyledCartItem, StyledPrice } from './CartItem.styled';
 import { Box } from '../Box/Box';
 import Image from 'next/image';
@@ -23,18 +23,21 @@ export const CartItem = ({ item }: TProps) => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
-  const onInputChange = (value: number | null, article: string) => {
-    if (value) setInputValue(value);
+  useEffect(() => {
     setCart(prev => {
-      const item = prev.find(item => item.product.options.article === article)!;
-      if (value) {
-        if (value && value > 100) value = 100;
-        if (value && value < 1) value = 1;
-        item.quantity = value;
-        setInputValue(value);
-      }
+      const currentItem = prev.find(
+        item => item.product.options.article === options.article
+      )!;
+      let value = inputValue;
+      if (inputValue > 100) value = 100;
+      if (value && value < 1) value = 1;
+      currentItem.quantity = value;
       return [...prev];
     });
+  }, [inputValue]);
+
+  const onInputChange = (value: number | null, article: string) => {
+    if (value) setInputValue(value);
   };
 
   return (
