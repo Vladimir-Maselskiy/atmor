@@ -9,6 +9,13 @@ export const NavCart = () => {
 
   useEffect(() => {
     const data = localStorage.getItem('cart');
+    if (data) {
+      setCart(JSON.parse(data));
+    }
+  }, []);
+
+  useEffect(() => {
+    const data = localStorage.getItem('cart');
     if (data) setCart(JSON.parse(data));
   }, [setCart]);
 

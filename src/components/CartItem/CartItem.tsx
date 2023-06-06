@@ -1,5 +1,5 @@
 import { ICartItem } from '@/interfaces/interfaces';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ModelName, StyledCartItem, StyledPrice } from './CartItem.styled';
 import { Box } from '../Box/Box';
 import Image from 'next/image';
@@ -12,12 +12,16 @@ type TProps = {
 };
 
 export const CartItem = ({ item }: TProps) => {
-  const { setCart } = useCartContext();
+  const { cart, setCart } = useCartContext();
   const {
     product: { aditional, options },
     quantity,
   } = item;
   const [inputValue, setInputValue] = useState<number>(quantity);
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   const onInputChange = (value: number | null, article: string) => {
     if (value) setInputValue(value);

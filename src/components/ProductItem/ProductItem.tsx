@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box } from '../Box/Box';
 import { Collapse, Divider, Descriptions, Button } from 'antd';
 import {
@@ -23,6 +23,11 @@ type TProps = {
 export const ProductItem = ({ product }: TProps) => {
   const { options, aditional } = product;
   const { cart, setCart } = useCartContext();
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
   const onBuyButtonCkick = () => {
     const index = cart.findIndex(item => {
       return item.product.options.article === options.article;
