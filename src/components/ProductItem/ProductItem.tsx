@@ -9,10 +9,10 @@ import {
   StyledPrice,
 } from './ProductItem.styled';
 import { IAtmorItem, ICartItem } from '@/interfaces/interfaces';
-import { width } from 'styled-system';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
 import { useCartContext } from '@/context/state';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const { Panel } = Collapse;
 
@@ -23,6 +23,7 @@ type TProps = {
 export const ProductItem = ({ product }: TProps) => {
   const { options, aditional } = product;
   const { cart, setCart } = useCartContext();
+  const route = useRouter();
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -34,16 +35,19 @@ export const ProductItem = ({ product }: TProps) => {
     });
     if (index === -1) {
       setCart(prev => [...prev, { product, quantity: 1 }]);
-      return;
+    } else {
+      const currentProduct: ICartItem = {
+        ...cart[index],
+        quantity: cart[index].quantity + 1,
+      };
+      setCart(prev => {
+        prev[index] = currentProduct;
+        return [...prev];
+      });
     }
-    const currentProduct: ICartItem = {
-      ...cart[index],
-      quantity: cart[index].quantity + 1,
-    };
-    setCart(prev => {
-      prev[index] = currentProduct;
-      return [...prev];
-    });
+    setTimeout(() => {
+      route.push('/cart');
+    }, 500);
   };
   return (
     <StyledItem>

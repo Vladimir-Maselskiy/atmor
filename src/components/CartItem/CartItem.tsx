@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
 import { Divider, InputNumber } from 'antd';
 import { useCartContext } from '@/context/state';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
 type TProps = {
   item: ICartItem;
@@ -40,6 +41,15 @@ export const CartItem = ({ item }: TProps) => {
     if (value) setInputValue(value);
   };
 
+  const onAddonClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const element = e.target as HTMLSpanElement;
+    const data = element.dataset.icon as 'minus' | 'plus';
+    let value = data === 'minus' ? inputValue - 1 : inputValue + 1;
+    if (value > 100) value = 100;
+    if (value < 1) value = 1;
+    setInputValue(value);
+  };
+
   return (
     <StyledCartItem>
       <Box display="flex" width="100%">
@@ -64,17 +74,25 @@ export const CartItem = ({ item }: TProps) => {
             <ModelName>{aditional.model}</ModelName>
             <p>{options.name}</p>
             <InputNumber
+              addonBefore={<MinusOutlined onClick={onAddonClick} />}
+              addonAfter={<PlusOutlined onClick={onAddonClick} />}
+              min={1}
+              max={100}
+              controls={false}
+              size="large"
               value={inputValue}
               onChange={(value: number | null) =>
                 onInputChange(value, options.article)
               }
               style={{
                 marginTop: 10,
-                marginLeft: 10,
-                paddingTop: 8,
-                paddingBottom: 8,
-                fontSize: 20,
-                border: '2px solid var(--accent-color)',
+                fontSize: 50,
+                lineHeight: 3,
+                width: 140,
+
+                textAlign: 'center',
+                // border: '2px solid var(--accent-color)',
+                borderRadius: 8,
               }}
             />
           </Box>
