@@ -4,9 +4,9 @@ import { ModelName, StyledCartItem, StyledPrice } from './CartItem.styled';
 import { Box } from '../Box/Box';
 import Image from 'next/image';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
-import { Divider, InputNumber } from 'antd';
+import { Button, Divider, InputNumber } from 'antd';
 import { useCartContext } from '@/context/state';
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
 type TProps = {
   item: ICartItem;
@@ -50,9 +50,20 @@ export const CartItem = ({ item }: TProps) => {
     setInputValue(value);
   };
 
+  const onCloseButtonClick = () => {
+    setCart(prev => {
+      const index = prev.findIndex(
+        item => item.product.options.article === options.article
+      )!;
+      console.log('index', index);
+      prev.splice(index, 1);
+      return [...prev];
+    });
+  };
+
   return (
     <StyledCartItem>
-      <Box display="flex" width="100%">
+      <Box position="relative" display="flex" width="100%" paddingRight={60}>
         <Box>
           <Image
             src={options.firstPhoto}
@@ -74,8 +85,15 @@ export const CartItem = ({ item }: TProps) => {
             <ModelName>{aditional.model}</ModelName>
             <p>{options.name}</p>
             <InputNumber
-              addonBefore={<MinusOutlined onClick={onAddonClick} />}
-              addonAfter={<PlusOutlined onClick={onAddonClick} />}
+              addonBefore={
+                <MinusOutlined
+                  onClick={onAddonClick}
+                  style={{ fontSize: 20 }}
+                />
+              }
+              addonAfter={
+                <PlusOutlined onClick={onAddonClick} style={{ fontSize: 20 }} />
+              }
               min={1}
               max={100}
               controls={false}
@@ -89,9 +107,7 @@ export const CartItem = ({ item }: TProps) => {
                 fontSize: 50,
                 lineHeight: 3,
                 width: 140,
-
                 textAlign: 'center',
-                // border: '2px solid var(--accent-color)',
                 borderRadius: 8,
               }}
             />
@@ -100,6 +116,10 @@ export const CartItem = ({ item }: TProps) => {
             {getPriceSpacesFormatted(options.price)} грн
           </StyledPrice>
         </Box>
+        <CloseOutlined
+          style={{ position: 'absolute', top: 20, right: 20 }}
+          onClick={onCloseButtonClick}
+        />
       </Box>
       <Divider />
     </StyledCartItem>
