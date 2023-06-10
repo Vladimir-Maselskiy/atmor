@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const StyledCartItem = styled.li`
   width: 100%;
   margin: 0 auto;
-  padding: 0 100px;
 `;
 
 export const StyledPrice = styled.p`

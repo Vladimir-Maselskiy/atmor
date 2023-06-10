@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
 
-import { Layout } from 'antd';
+import { ConfigProvider, Layout } from 'antd';
 import { Header } from '@/components/Header/Header';
 import { CartWrapper } from '@/context/state';
 
@@ -21,12 +21,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <CartWrapper>
-        <body className={inter.className}>
-          <Layout style={{ minWidth: 290, width: '100%', minHeight: '100vh' }}>
-            <Header />
-            {children}
-          </Layout>
-        </body>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: 'var(--accent-color)',
+              colorPrimaryHover: 'var(--accent-color)',
+            },
+          }}
+        >
+          <body className={inter.className}>
+            <Layout
+              style={{ minWidth: 290, width: '100%', minHeight: '100vh' }}
+            >
+              <Header />
+              {children}
+            </Layout>
+          </body>
+        </ConfigProvider>
       </CartWrapper>
     </html>
   );
