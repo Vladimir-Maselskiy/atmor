@@ -31,3 +31,10 @@ export interface ICartItem {
   product: IAtmorItem;
   quantity: number;
 }
+
+export interface IUser {
+  name: string;
+  email: string;
+  address: string;
+  phone: string;
+}
