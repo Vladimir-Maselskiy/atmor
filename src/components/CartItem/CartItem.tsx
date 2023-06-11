@@ -1,3 +1,4 @@
+
 import { ICartItem } from '@/interfaces/interfaces';
 import React, { useState, useEffect, use } from 'react';
 import { ModelName, StyledCartItem, StyledPrice } from './CartItem.styled';
@@ -113,7 +114,7 @@ export const CartItem = ({ item }: TProps) => {
             />
           </Box>
           <StyledPrice>
-            {getPriceSpacesFormatted(options.price)} грн
+            {getPriceSpacesFormatted(options.price * quantity)} грн
           </StyledPrice>
         </Box>
         <CloseOutlined

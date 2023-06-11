@@ -1,3 +1,4 @@
+'use client';
 import { useCartContext } from '@/context/state';
 import React from 'react';
 import { CartItem } from '../CartItem/CartItem';
