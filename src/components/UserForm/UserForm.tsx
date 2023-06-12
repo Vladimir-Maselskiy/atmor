@@ -2,94 +2,128 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useCartContext } from '@/context/state';
 import { useRouter } from 'next/navigation';
-import {
-  FieldWrapper,
-  Label,
-  StyledForm,
-  StyledInput,
-} from './UserForm.styled';
+import { FieldWrapper, StyledForm, StyledInput } from './UserForm.styled';
 import { Button } from 'antd';
-import { IUser } from '@/interfaces/interfaces';
+
+type TTgiggerTypes = 'onBlur' | 'onChange';
+
+const triggers = {
+  surname: 'onBlur',
+  name: 'onBlur',
+  email: 'onBlur',
+  phone: 'onBlur',
+} as { [key: string]: TTgiggerTypes };
 
 export const UserForm = () => {
   const { cart, setCart } = useCartContext();
   const ref = useRef<HTMLButtonElement>(null);
   const router = useRouter();
 
-  const onOrderSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (cart.length === 0) return;
-    if (!(e.target instanceof HTMLFormElement)) {
-      return;
-    }
-    let user: IUser = {
-      email: '',
-      address: '',
-      name: '',
-      phone: '',
-    };
-    const data = new FormData(e.target);
-    const entries = data.entries();
-    for (let entry of Array.from(entries)) {
-      const key = entry[0] as 'phone' | 'email' | 'address' | 'name';
-      const val = entry[1] as string;
-      user[key] = val;
-    }
+  const [validateTrigger, setValidateTrigger] = useState(triggers);
 
+  const onFinish = (values: unknown) => {
     setTimeout(() => {
       router.push('/thank-page');
     }, 1000);
   };
+
+  const validateNameAndSurName = (formField: any, value: any) => {
+    const { field }: { field: 'user-name' | 'user-surname' } = formField;
+    let label = '';
+    let prop = field.split('-')[1];
+    if (field === 'user-name') {
+      label = "Ім'я";
+    }
+    if (field === 'user-surname') {
+      label = 'Прізвище';
+    }
+    setValidateTrigger(prev => ({ ...prev, [prop]: 'onChange' }));
+
+    if (!value) {
+      return Promise.reject(`${label} обов'язкове`);
+    }
+    if (!/^[\u0400-\u04FF']{2,}$/i.test(value)) {
+      return Promise.reject(`Введіть ${label.toLowerCase()} кирилицею`);
+    }
+
+    setValidateTrigger(prev => ({ ...prev, [prop]: 'onBlur' }));
+
+    return Promise.resolve();
+  };
+
+  const validateEmail = (formField: any, value: any) => {
+    console.log('formField', formField);
+    setValidateTrigger(prev => ({ ...prev, email: 'onChange' }));
+    if (!value) {
+      return Promise.reject(`Email обов'язковий`);
+    }
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+      return Promise.reject(`Введіть електронну пошту`);
+    }
+    setValidateTrigger(prev => ({ ...prev, email: 'onBlur' }));
+
+    return Promise.resolve();
+  };
+
   return (
-    <StyledForm onSubmit={onOrderSubmit}>
-      <FieldWrapper>
-        <Label htmlFor="user-company-address">Address*</Label>
-
-        <StyledInput
-          id="user-company-address"
-          name="address"
-          type="text"
-          placeholder="your company  address"
-          required
-        ></StyledInput>
+    <StyledForm layout="vertical" onFinish={onFinish}>
+      <FieldWrapper
+        name="user-name"
+        label="Ім'я"
+        validateTrigger={[validateTrigger.name]}
+        rules={[
+          {
+            required: true,
+            validator: validateNameAndSurName,
+          },
+        ]}
+      >
+        <StyledInput placeholder="Введіть ваше ім'я"></StyledInput>
       </FieldWrapper>
-      <FieldWrapper>
-        <Label htmlFor="user-name"> Full Name*</Label>
-        <StyledInput
-          id="user-name"
-          name="name"
-          type="text"
-          pattern="^[A-Z][a-z]+(\s[A-Z][a-z]+)*$"
-          placeholder="Your Full Name"
-          required
-        ></StyledInput>
+      <FieldWrapper
+        name="user-surname"
+        label="Прізвище"
+        validateTrigger={[validateTrigger.surname]}
+        rules={[
+          {
+            required: true,
+            validator: validateNameAndSurName,
+          },
+        ]}
+      >
+        <StyledInput placeholder="Введіть ваше прізвище"></StyledInput>
       </FieldWrapper>
-      <FieldWrapper>
-        <Label htmlFor="user-email"> Your Email*</Label>
-        <StyledInput
-          id="user-email"
-          name="email"
-          type="email"
-          placeholder="example@yourmail.com"
-          required
-        ></StyledInput>
-      </FieldWrapper>
-
-      <FieldWrapper>
-        <Label htmlFor="user-phone">Phone number*</Label>
-        <StyledInput
-          id="user-phone"
-          name="phone"
-          type="tel"
-          pattern="[+]380\d{9}"
-          placeholder="Enter your phone"
-          required
-        ></StyledInput>
+      <FieldWrapper
+        name="user-email"
+        label="Email адреса"
+        validateTrigger={[validateTrigger.email]}
+        rules={[
+          {
+            required: true,
+            validator: validateEmail,
+          },
+        ]}
+      >
+        <StyledInput placeholder="Введіть ваш email"></StyledInput>
       </FieldWrapper>
 
-      <Button type="primary" htmlType="submit" ref={ref}>
-        Comfirm
-      </Button>
+      <FieldWrapper
+        name="user-phone"
+        label="Номер телефону"
+        rules={[{ required: true, message: 'Введіть номер телефону' }]}
+      >
+        <StyledInput placeholder="Введіть номер телефону"></StyledInput>
+      </FieldWrapper>
+      <FieldWrapper>
+        <Button
+          style={{ borderRadius: 0 }}
+          type="primary"
+          htmlType="submit"
+          ref={ref}
+        >
+          Підтвердити
+        </Button>
+      </FieldWrapper>
     </StyledForm>
   );
 };
