@@ -3,7 +3,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useCartContext } from '@/context/state';
 import { useRouter } from 'next/navigation';
 import { FieldWrapper, StyledForm, StyledInput } from './UserForm.styled';
-import { Button } from 'antd';
+import { Button, Form } from 'antd';
+import { getAutoCompletedPhoneValue } from '@/utils/getAutoCompletedPhoneValue';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -19,7 +20,20 @@ export const UserForm = () => {
   const ref = useRef<HTMLButtonElement>(null);
   const router = useRouter();
 
+  const [form] = Form.useForm();
+
   const [validateTrigger, setValidateTrigger] = useState(triggers);
+  const [phoneValue, setPhoneValue] = useState('');
+
+  const onPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const autoCompletedPhoneValue = getAutoCompletedPhoneValue({
+      phoneValue,
+      value,
+    });
+    form.setFieldValue('user-phone', autoCompletedPhoneValue);
+    setPhoneValue(autoCompletedPhoneValue);
+  };
 
   const onFinish = (values: unknown) => {
     setTimeout(() => {
@@ -66,7 +80,7 @@ export const UserForm = () => {
   };
 
   return (
-    <StyledForm layout="vertical" onFinish={onFinish}>
+    <StyledForm layout="vertical" form={form} onFinish={onFinish}>
       <FieldWrapper
         name="user-name"
         label="Ім'я"
@@ -106,13 +120,15 @@ export const UserForm = () => {
       >
         <StyledInput placeholder="Введіть ваш email"></StyledInput>
       </FieldWrapper>
-
       <FieldWrapper
         name="user-phone"
         label="Номер телефону"
         rules={[{ required: true, message: 'Введіть номер телефону' }]}
       >
-        <StyledInput placeholder="Введіть номер телефону"></StyledInput>
+        <StyledInput
+          placeholder="Введіть номер телефону"
+          onChange={onPhoneChange}
+        ></StyledInput>
       </FieldWrapper>
       <FieldWrapper>
         <Button
