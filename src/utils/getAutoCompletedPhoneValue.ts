@@ -1,48 +1,70 @@
 export const getAutoCompletedPhoneValue = ({
   phoneValue,
   value,
+  selectionStart,
 }: {
   phoneValue: string;
   value: string;
+  selectionStart: number | null | undefined;
 }) => {
-  const filteredPhoneValue =
-    '+' +
-    value
-      .split('')
-      .filter(char => /^[0-9]$/.test(char))
-      .join('');
+  if (selectionStart && selectionStart === value.length && value < phoneValue)
+    return value;
+  let res = '';
+  let indexPointer = 0;
+  let patternIndexPointer = 0;
 
-  const numberPrefix = '+38 (0';
-  const lastChar = value.slice(value.length - 1);
+  const pattern = '+38 (0';
+  const valuePrefix = value.slice(0, 6);
 
-  console.log('value.slice', value.slice(0, Math.min(value.length, 6)));
+  // phone prefix logic block
+  while (patternIndexPointer < pattern.length) {
+    if (
+      pattern.slice(patternIndexPointer).includes(valuePrefix[indexPointer])
+    ) {
+      res = res + valuePrefix[indexPointer];
+      patternIndexPointer = pattern.indexOf(valuePrefix[indexPointer]) + 1;
+      indexPointer += 1;
+      if (indexPointer >= valuePrefix.length) {
+        break;
+      }
+      continue;
+    }
 
-  if (
-    value.length <= phoneValue.length &&
-    value.slice(0, Math.min(value.length, 6)) !==
-      numberPrefix.slice(0, Math.min(value.length, 6))
-  )
-    return phoneValue;
-  if (value.length <= phoneValue.length) return value;
-  if (value.length === 0) return '';
-  if (value.length <= 6) {
-    const index = numberPrefix.indexOf(lastChar);
-    if (index === -1 && /^[0-9]$/.test(lastChar))
-      return numberPrefix + lastChar;
-    if (index === -1) return numberPrefix;
-    return numberPrefix.slice(0, index + 1);
+    patternIndexPointer = pattern.length;
   }
 
-  if (!/^[0-9]$/.test(lastChar)) {
-    return phoneValue;
+  const restValuePart = value.slice(indexPointer);
+  const lastCharInValuePrefix = res[res.length - 1];
+  if (restValuePart.length === 0 && value !== '') {
+    if (!lastCharInValuePrefix) {
+      res = pattern;
+    } else {
+      res = pattern.slice(0, pattern.indexOf(lastCharInValuePrefix) + 1);
+    }
   }
 
-  if (value.length === 9)
-    return value.slice(0, value.length - 1) + ') ' + lastChar;
-  if (value.length === 10)
-    return value.slice(0, value.length - 1) + ' ' + lastChar;
-  if (value.length === 14 || value.length === 17)
-    return value.slice(0, value.length - 1) + '-' + lastChar;
-  if (value.length >= 20) return phoneValue;
-  return value;
+  if (restValuePart.length > 0) {
+    res = pattern;
+  }
+
+  const restPhoneNumberPart = restValuePart
+    .split('')
+    .filter(char => /^[0-9]$/.test(char));
+  console.log('restPhoneNumberPart', restPhoneNumberPart);
+
+  const restPhoneNumberPartFormatted: string[] = [];
+
+  restPhoneNumberPart.slice(0, 9).forEach((char, index) => {
+    if (index === 2) {
+      restPhoneNumberPartFormatted.push(')', ' ', char);
+      return;
+    }
+    if (index === 5 || index === 7) {
+      restPhoneNumberPartFormatted.push('-', char);
+      return;
+    }
+    restPhoneNumberPartFormatted.push(char);
+  });
+
+  return res + restPhoneNumberPartFormatted.join('');
 };

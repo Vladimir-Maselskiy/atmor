@@ -1,9 +1,9 @@
 'use client';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, MutableRefObject } from 'react';
 import { useCartContext } from '@/context/state';
 import { useRouter } from 'next/navigation';
 import { FieldWrapper, StyledForm, StyledInput } from './UserForm.styled';
-import { Button, Form } from 'antd';
+import { Button, Form, InputRef } from 'antd';
 import { getAutoCompletedPhoneValue } from '@/utils/getAutoCompletedPhoneValue';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
@@ -18,6 +18,7 @@ const triggers = {
 export const UserForm = () => {
   const { cart, setCart } = useCartContext();
   const ref = useRef<HTMLButtonElement>(null);
+  const phoneInputRef = useRef<InputRef>(null);
   const router = useRouter();
 
   const [form] = Form.useForm();
@@ -30,6 +31,7 @@ export const UserForm = () => {
     const autoCompletedPhoneValue = getAutoCompletedPhoneValue({
       phoneValue,
       value,
+      selectionStart: phoneInputRef.current?.input?.selectionStart,
     });
     form.setFieldValue('user-phone', autoCompletedPhoneValue);
     setPhoneValue(autoCompletedPhoneValue);
@@ -126,6 +128,7 @@ export const UserForm = () => {
         rules={[{ required: true, message: 'Введіть номер телефону' }]}
       >
         <StyledInput
+          ref={phoneInputRef}
           placeholder="Введіть номер телефону"
           onChange={onPhoneChange}
         ></StyledInput>
