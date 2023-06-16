@@ -28,12 +28,34 @@ export const UserForm = () => {
 
   const onPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
+    const selectionStart = phoneInputRef.current?.input?.selectionStart;
     const autoCompletedPhoneValue = getAutoCompletedPhoneValue({
       phoneValue,
       value,
-      selectionStart: phoneInputRef.current?.input?.selectionStart,
+      selectionStart,
     });
+    const isDeleting = phoneValue.length - value.length > 0 ? true : false;
     form.setFieldValue('user-phone', autoCompletedPhoneValue);
+
+    if (selectionStart && isDeleting) {
+      console.log('selectionStartdelete', selectionStart);
+      setTimeout(() => {
+        phoneInputRef.current?.input?.setSelectionRange(
+          selectionStart,
+          selectionStart
+        );
+      }, 0);
+    }
+    if (!isDeleting) {
+      console.log('selectionStartAdd', selectionStart);
+      setTimeout(() => {
+        phoneInputRef.current?.input?.setSelectionRange(
+          autoCompletedPhoneValue.length,
+          autoCompletedPhoneValue.length
+        );
+      }, 0);
+    }
+
     setPhoneValue(autoCompletedPhoneValue);
   };
 

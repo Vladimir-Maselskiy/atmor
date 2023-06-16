@@ -47,10 +47,11 @@ export const getAutoCompletedPhoneValue = ({
     res = pattern;
   }
 
+  // rest part of number logic block
+
   const restPhoneNumberPart = restValuePart
     .split('')
     .filter(char => /^[0-9]$/.test(char));
-  console.log('restPhoneNumberPart', restPhoneNumberPart);
 
   const restPhoneNumberPartFormatted: string[] = [];
 
