@@ -1,3 +1,4 @@
+import { InputNumber } from 'antd';
 import styled from 'styled-components';
 
 export const StyledCartItem = styled.li`
@@ -13,4 +14,16 @@ export const StyledPrice = styled.p`
 
 export const ModelName = styled.p`
   font-weight: 700;
+`;
+export const InputNumberStyled = styled(InputNumber)`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 24px;
+  width: 140px;
+  text-align: center;
+  border-radius: 8px;
+  /* & .ant-input-number { */
+  /* box-shadow: none; */
+  /* } */
 `;

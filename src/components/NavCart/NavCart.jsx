@@ -12,7 +12,7 @@ export const NavCart = () => {
     if (data) {
       setCart(JSON.parse(data));
     }
-  }, []);
+  }, [setCart]);
 
   useEffect(() => {
     const data = localStorage.getItem('cart');

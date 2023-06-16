@@ -1,13 +1,18 @@
-
 import { ICartItem } from '@/interfaces/interfaces';
 import React, { useState, useEffect, use } from 'react';
-import { ModelName, StyledCartItem, StyledPrice } from './CartItem.styled';
+import {
+  InputNumberStyled,
+  ModelName,
+  StyledCartItem,
+  StyledPrice,
+} from './CartItem.styled';
 import { Box } from '../Box/Box';
 import Image from 'next/image';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
 import { Button, Divider, InputNumber } from 'antd';
 import { useCartContext } from '@/context/state';
 import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { valueType } from 'antd/es/statistic/utils';
 
 type TProps = {
   item: ICartItem;
@@ -36,16 +41,14 @@ export const CartItem = ({ item }: TProps) => {
       currentItem.quantity = value;
       return [...prev];
     });
-  }, [inputValue]);
+  }, [inputValue, options.article, setCart]);
 
-  const onInputChange = (value: number | null, article: string) => {
-    if (value) setInputValue(value);
+  const onInputChange = (value: valueType | null, article: string) => {
+    if (value) setInputValue(value as number);
   };
 
-  const onAddonClick = (e: React.MouseEvent<HTMLSpanElement>) => {
-    const element = e.target as HTMLSpanElement;
-    const data = element.dataset.icon as 'minus' | 'plus';
-    let value = data === 'minus' ? inputValue - 1 : inputValue + 1;
+  const onAddonClick = (action: 'minus' | 'plus') => {
+    let value = action === 'minus' ? inputValue - 1 : inputValue + 1;
     if (value > 100) value = 100;
     if (value < 1) value = 1;
     setInputValue(value);
@@ -85,32 +88,27 @@ export const CartItem = ({ item }: TProps) => {
           <Box marginLeft={116}>
             <ModelName>{aditional.model}</ModelName>
             <p>{options.name}</p>
-            <InputNumber
+            <InputNumberStyled
               addonBefore={
                 <MinusOutlined
-                  onClick={onAddonClick}
+                  onClick={() => onAddonClick('minus')}
                   style={{ fontSize: 20 }}
                 />
               }
               addonAfter={
-                <PlusOutlined onClick={onAddonClick} style={{ fontSize: 20 }} />
+                <PlusOutlined
+                  onClick={() => onAddonClick('plus')}
+                  style={{ fontSize: 20 }}
+                />
               }
               min={1}
               max={100}
               controls={false}
               size="large"
               value={inputValue}
-              onChange={(value: number | null) =>
+              onChange={(value: valueType | null) =>
                 onInputChange(value, options.article)
               }
-              style={{
-                marginTop: 10,
-                fontSize: 50,
-                lineHeight: 3,
-                width: 140,
-                textAlign: 'center',
-                borderRadius: 8,
-              }}
             />
           </Box>
           <StyledPrice>

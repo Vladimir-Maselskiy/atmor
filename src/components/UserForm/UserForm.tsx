@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useState, useEffect, MutableRefObject } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useCartContext } from '@/context/state';
 import { useRouter } from 'next/navigation';
 import { FieldWrapper, StyledForm, StyledInput } from './UserForm.styled';
@@ -25,37 +25,37 @@ export const UserForm = () => {
 
   const [validateTrigger, setValidateTrigger] = useState(triggers);
   const [phoneValue, setPhoneValue] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [selectionStart, setSelectionStart] = useState(0);
+
+  useEffect(() => {
+    if (isDeleting) {
+      phoneInputRef.current?.input?.setSelectionRange(
+        selectionStart,
+        selectionStart
+      );
+    } else {
+      setTimeout(() => {
+        console.log('phoneValue', phoneValue.length);
+        phoneInputRef.current?.input?.setSelectionRange(
+          phoneValue.length,
+          phoneValue.length
+        );
+      }, 0);
+    }
+  }, [isDeleting, phoneValue.length, selectionStart]);
 
   const onPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const selectionStart = phoneInputRef.current?.input?.selectionStart;
+    if (selectionStart) setSelectionStart(selectionStart);
     const autoCompletedPhoneValue = getAutoCompletedPhoneValue({
       phoneValue,
       value,
       selectionStart,
     });
-    const isDeleting = phoneValue.length - value.length > 0 ? true : false;
-    form.setFieldValue('user-phone', autoCompletedPhoneValue);
-
-    if (selectionStart && isDeleting) {
-      console.log('selectionStartdelete', selectionStart);
-      setTimeout(() => {
-        phoneInputRef.current?.input?.setSelectionRange(
-          selectionStart,
-          selectionStart
-        );
-      }, 0);
-    }
-    if (!isDeleting) {
-      console.log('selectionStartAdd', selectionStart);
-      setTimeout(() => {
-        phoneInputRef.current?.input?.setSelectionRange(
-          autoCompletedPhoneValue.length,
-          autoCompletedPhoneValue.length
-        );
-      }, 0);
-    }
-
+    form.setFieldsValue({ 'user-phone': autoCompletedPhoneValue });
+    setIsDeleting(phoneValue.length - value.length > 0 ? true : false);
     setPhoneValue(autoCompletedPhoneValue);
   };
 

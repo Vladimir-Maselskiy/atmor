@@ -27,6 +27,11 @@ export default function RootLayout({
               colorPrimary: 'var(--accent-color)',
               colorPrimaryHover: 'var(--accent-color)',
             },
+            components: {
+              InputNumber: {
+                controlOutline: 'none',
+              },
+            },
           }}
         >
           <body className={inter.className}>
