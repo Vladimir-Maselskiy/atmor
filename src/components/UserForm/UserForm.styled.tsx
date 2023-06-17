@@ -4,13 +4,13 @@ const { Item } = Form;
 
 export const StyledForm = styled(Form)`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+
   gap: 25px;
   padding: 30px 30px 17px;
   margin: 20px auto 0;
   min-width: 250px;
-  width: 250px;
+  width: 100%;
 `;
 
 export const FieldWrapper = styled(Item)`

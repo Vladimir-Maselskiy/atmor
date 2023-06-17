@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { FieldWrapper, StyledForm, StyledInput } from './UserForm.styled';
 import { Button, Form, InputRef } from 'antd';
 import { getAutoCompletedPhoneValue } from '@/utils/getAutoCompletedPhoneValue';
+import { Box } from '../Box/Box';
+import { OrderItem } from '../OrderItem/OrderItem';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -105,66 +107,79 @@ export const UserForm = () => {
 
   return (
     <StyledForm layout="vertical" form={form} onFinish={onFinish}>
-      <FieldWrapper
-        name="user-name"
-        label="Ім'я"
-        validateTrigger={[validateTrigger.name]}
-        rules={[
-          {
-            required: true,
-            validator: validateNameAndSurName,
-          },
-        ]}
-      >
-        <StyledInput placeholder="Введіть ваше ім'я"></StyledInput>
-      </FieldWrapper>
-      <FieldWrapper
-        name="user-surname"
-        label="Прізвище"
-        validateTrigger={[validateTrigger.surname]}
-        rules={[
-          {
-            required: true,
-            validator: validateNameAndSurName,
-          },
-        ]}
-      >
-        <StyledInput placeholder="Введіть ваше прізвище"></StyledInput>
-      </FieldWrapper>
-      <FieldWrapper
-        name="user-email"
-        label="Email адреса"
-        validateTrigger={[validateTrigger.email]}
-        rules={[
-          {
-            required: true,
-            validator: validateEmail,
-          },
-        ]}
-      >
-        <StyledInput placeholder="Введіть ваш email"></StyledInput>
-      </FieldWrapper>
-      <FieldWrapper
-        name="user-phone"
-        label="Номер телефону"
-        rules={[{ required: true, message: 'Введіть номер телефону' }]}
-      >
-        <StyledInput
-          ref={phoneInputRef}
-          placeholder="Введіть номер телефону"
-          onChange={onPhoneChange}
-        ></StyledInput>
-      </FieldWrapper>
-      <FieldWrapper>
-        <Button
-          style={{ borderRadius: 0 }}
-          type="primary"
-          htmlType="submit"
-          ref={ref}
+      <Box>
+        <FieldWrapper
+          name="user-phone"
+          label="Номер телефону"
+          rules={[{ required: true, message: 'Введіть номер телефону' }]}
         >
-          Підтвердити
-        </Button>
-      </FieldWrapper>
+          <StyledInput
+            ref={phoneInputRef}
+            placeholder="Введіть номер телефону"
+            onChange={onPhoneChange}
+          ></StyledInput>
+        </FieldWrapper>
+        <Box display="flex" gridGap={40}>
+          <FieldWrapper
+            name="user-name"
+            label="Ім'я"
+            validateTrigger={[validateTrigger.name]}
+            rules={[
+              {
+                required: true,
+                validator: validateNameAndSurName,
+              },
+            ]}
+          >
+            <StyledInput placeholder="Введіть ваше ім'я"></StyledInput>
+          </FieldWrapper>
+          <FieldWrapper
+            name="user-surname"
+            label="Прізвище"
+            validateTrigger={[validateTrigger.surname]}
+            rules={[
+              {
+                required: true,
+                validator: validateNameAndSurName,
+              },
+            ]}
+          >
+            <StyledInput placeholder="Введіть ваше прізвище"></StyledInput>
+          </FieldWrapper>
+        </Box>
+        <FieldWrapper
+          name="user-email"
+          label="Email адреса"
+          validateTrigger={[validateTrigger.email]}
+          rules={[
+            {
+              required: true,
+              validator: validateEmail,
+            },
+          ]}
+        >
+          <StyledInput placeholder="Введіть ваш email"></StyledInput>
+        </FieldWrapper>
+
+        <FieldWrapper>
+          <Button
+            style={{ borderRadius: 0 }}
+            type="primary"
+            htmlType="submit"
+            ref={ref}
+          >
+            Підтвердити
+          </Button>
+        </FieldWrapper>
+      </Box>
+      <Box>
+        <p>Items in order</p>
+        <ul>
+          {cart.map(item => (
+            <OrderItem key={item.product.options.article} item={item} />
+          ))}
+        </ul>
+      </Box>
     </StyledForm>
   );
 };

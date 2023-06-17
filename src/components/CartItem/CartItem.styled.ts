@@ -23,7 +23,4 @@ export const InputNumberStyled = styled(InputNumber)`
   width: 140px;
   text-align: center;
   border-radius: 8px;
-  /* & .ant-input-number { */
-  /* box-shadow: none; */
-  /* } */
 `;
