@@ -13,6 +13,7 @@ import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
 import { useCartContext } from '@/context/state';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const { Panel } = Collapse;
 
@@ -53,13 +54,15 @@ export const ProductItem = ({ product }: TProps) => {
     <StyledItem>
       <Box display="flex">
         <Box>
-          <Image
-            src={options.firstPhoto}
-            alt={`${aditional.model} photo`}
-            width={200}
-            height={256}
-            style={{ objectFit: 'contain', objectPosition: 'center' }}
-          />
+          <Link href={`/products/${aditional.model}/${options.article}`}>
+            <Image
+              src={options.firstPhoto}
+              alt={`${aditional.model} photo`}
+              width={200}
+              height={256}
+              style={{ objectFit: 'contain', objectPosition: 'center' }}
+            />
+          </Link>
         </Box>
         <Box lineHeight={1.5} paddingTop={40} width={500}>
           <Box marginLeft={116}>
@@ -91,12 +94,6 @@ export const ProductItem = ({ product }: TProps) => {
                 </Descriptions.Item>
                 <Descriptions.Item label="Потужність">
                   {`${options.power} кВт`}
-                </Descriptions.Item>
-                <Descriptions.Item label="Напруга живлення">
-                  {`${aditional.supplyVoltage}В`}
-                </Descriptions.Item>
-                <Descriptions.Item label="Тип">
-                  {aditional.type}
                 </Descriptions.Item>
               </Descriptions>
             </Panel>

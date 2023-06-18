@@ -1,9 +1,15 @@
 import { ICartItem } from '@/interfaces/interfaces';
-import { Divider, Image } from 'antd';
+import { Divider } from 'antd';
 import React from 'react';
 import { Box } from '../Box/Box';
-import { ModelName, StyledOrderItem, StyledPrice } from './OrderItem.styled';
+import {
+  ModelName,
+  StyledOrderItem,
+  StyledPrice,
+  StyledProductQuantity,
+} from './OrderItem.styled';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
+import Image from 'next/image';
 
 type TProps = {
   item: ICartItem;
@@ -16,7 +22,13 @@ export const OrderItem = ({ item }: TProps) => {
   } = item;
   return (
     <StyledOrderItem>
-      <Box position="relative" display="flex" width="100%" paddingRight={60}>
+      <Box
+        position="relative"
+        display="flex"
+        alignItems="center"
+        width="100%"
+        paddingRight={60}
+      >
         <Box>
           <Image
             src={options.firstPhoto}
@@ -25,22 +37,22 @@ export const OrderItem = ({ item }: TProps) => {
             height={256}
             style={{ objectFit: 'contain', objectPosition: 'center' }}
           />
+          
         </Box>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          flexGrow={1}
-          lineHeight={1.5}
-          paddingTop={40}
-          width={500}
-        >
-          <Box marginLeft={116}>
+        <Box>
+          <Box marginLeft={20}>
             <ModelName>{aditional.model}</ModelName>
             <p>{options.name}</p>
+            <Box display="flex" justifyContent="space-between" marginTop={20}>
+              <StyledPrice>
+                {getPriceSpacesFormatted(options.price)} грн{' '}
+                <StyledProductQuantity>x {quantity}</StyledProductQuantity>
+              </StyledPrice>
+              <StyledPrice>
+                {getPriceSpacesFormatted(options.price * quantity)} грн
+              </StyledPrice>
+            </Box>
           </Box>
-          <StyledPrice>
-            {getPriceSpacesFormatted(options.price * quantity)} грн
-          </StyledPrice>
         </Box>
       </Box>
       <Divider />

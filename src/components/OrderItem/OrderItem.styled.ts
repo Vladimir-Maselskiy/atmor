@@ -10,7 +10,11 @@ export const ModelName = styled.p`
 `;
 
 export const StyledPrice = styled.p`
-  font-size: 32px;
-  color: var(--accent-color);
+  font-size: 18px;
+  color: var(--text-color);
   white-space: nowrap;
+`;
+export const StyledProductQuantity = styled.span`
+  color: var(--grey-text-color);
+  margin-left: 20px;
 `;

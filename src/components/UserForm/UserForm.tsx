@@ -2,7 +2,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useCartContext } from '@/context/state';
 import { useRouter } from 'next/navigation';
-import { FieldWrapper, StyledForm, StyledInput } from './UserForm.styled';
+import {
+  FieldWrapper,
+  OrderItemsTitle,
+  StyledForm,
+  StyledInput,
+} from './UserForm.styled';
 import { Button, Form, InputRef } from 'antd';
 import { getAutoCompletedPhoneValue } from '@/utils/getAutoCompletedPhoneValue';
 import { Box } from '../Box/Box';
@@ -173,7 +178,7 @@ export const UserForm = () => {
         </FieldWrapper>
       </Box>
       <Box>
-        <p>Items in order</p>
+        <OrderItemsTitle>ТОВАРИ В ЗАМОВЛЕННІ</OrderItemsTitle>
         <ul>
           {cart.map(item => (
             <OrderItem key={item.product.options.article} item={item} />
