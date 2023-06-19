@@ -1,19 +1,15 @@
 'use client';
+import { IAtmorItem } from '@/interfaces/interfaces';
+import data from '../../../data/products.json';
+import { Product } from '@/components/Product/Product';
 
-import { useParams } from 'next/navigation';
-
-export default function ProductsItemPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default function ProductPage({ params }: { params: { slug: string } }) {
   const currentArticle = params.slug[params.slug.length - 1];
-  console.log('params', params);
+  const { products }: { products: IAtmorItem[] } = data;
 
-  return (
-    <>
-      <p style={{ paddingTop: 150 }}>Product Items Page2</p>
-      <p style={{ paddingTop: 10 }}>currentArticle: {currentArticle}</p>
-    </>
+  const product = products.find(
+    product => product.options.article === currentArticle
   );
+
+  return product && <Product product={product} />;
 }
