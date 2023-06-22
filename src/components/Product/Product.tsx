@@ -6,8 +6,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import 'swiper/css/free-mode';
-import 'swiper/css/effect-fade';
 import {
   Autoplay,
   Pagination,
@@ -17,44 +15,33 @@ import {
   Thumbs,
 } from 'swiper';
 import Image from 'next/image';
+import { PreviewPhotosItem, PreviewPhotosList } from './Product.styled';
 
 type TProps = {
   product: IAtmorItem;
 };
 
 export const Product = ({ product }: TProps) => {
-  console.log('product', product);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   return (
     <Box paddingTop={115}>
-      <>
-        <p>Product</p>
+      <Box width="50%">
         <Swiper
           style={{
-            width: '100%',
-            aspectRatio: 2.65 / 1,
+            aspectRatio: 2 / 1,
           }}
           thumbs={{ swiper: thumbsSwiper }}
-          effect={'fade'}
+          // effect={'fade'}
           //   spaceBetween={30}
           centeredSlides={true}
-          // autoplay={{
-          //   delay: 5000,
-          //   disableOnInteraction: false,
-          // }}
-          loop={true}
-          // pagination={{
-          //   clickable: true,
-          // }}
-          // navigation={true}
-          modules={[
-            EffectFade,
-            Autoplay,
-            Pagination,
-            Navigation,
-            FreeMode,
-            Thumbs,
-          ]}
+          // modules={[
+          //   EffectFade,
+          //   Autoplay,
+          //   Pagination,
+          //   Navigation,
+          //   FreeMode,
+          //   Thumbs,
+          // ]}
           className="productSwiper"
         >
           {product.aditional.photos.map(photo => (
@@ -63,39 +50,19 @@ export const Product = ({ product }: TProps) => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <Swiper
-          // style={{
-          //   width: '100%',
-          //   aspectRatio: 2.65 / 1,
-          // }}
-          slidesPerView={3}
-          thumbs={{ swiper: thumbsSwiper }}
-          //   spaceBetween={30}
-          // centeredSlides={true}
-          // autoplay={{
-          //   delay: 5000,
-          //   disableOnInteraction: false,
-          // }}
-          // loop={true}
-          // pagination={{
-          //   clickable: true,
-          // }}
-          // navigation={true}
-          modules={[EffectFade, FreeMode, Thumbs]}
-          className="productSwiperNav"
-        >
+        <PreviewPhotosList>
           {product.aditional.photos.map(photo => (
-            <SwiperSlide key={photo}>
+            <PreviewPhotosItem key={photo}>
               <Image
                 src={`${photo}`}
                 alt={`${product.options.name}`}
                 width={100}
                 height={100}
               />
-            </SwiperSlide>
+            </PreviewPhotosItem>
           ))}
-        </Swiper>
-      </>
+        </PreviewPhotosList>
+      </Box>
     </Box>
   );
 };
