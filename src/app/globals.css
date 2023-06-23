@@ -49,3 +49,13 @@ a {
 li {
   list-style: none;
 }
+
+.swiper-for-navigation .swiper-slide:hover {
+  border: 1px solid var(--grey-text-color);
+  border-radius: 5px;
+}
+
+.swiper-for-navigation .swiper-slide.swiper-slide-thumb-active {
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+}
