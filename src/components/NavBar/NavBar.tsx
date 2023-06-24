@@ -12,6 +12,7 @@ export const NavBar = () => {
       minHeight="35px"
       justifyContent="center"
       backgroundColor="var(--accent-color)"
+      borderBottom="1px solid var(--text-color)"
     >
       <StyledLink href="/">
         <HomeFilled />

@@ -4,6 +4,7 @@ import { Box } from '../Box/Box';
 import { Collapse, Divider, Descriptions, Button } from 'antd';
 import {
   ModelName,
+  ModelTitle,
   PanelText,
   StyledItem,
   StyledPrice,
@@ -69,9 +70,22 @@ export const ProductItem = ({ product }: TProps) => {
             <StyledPrice>
               {getPriceSpacesFormatted(options.price)} грн
             </StyledPrice>
-            <Button onClick={onBuyButtonCkick}>Купити</Button>
+            <Button
+              type="primary"
+              style={{
+                backgroundColor: 'var(--accent-color)',
+                fontWeight: 600,
+                boxShadow: 'none',
+                marginTop: 20,
+                width: 140,
+                borderRadius: 0,
+              }}
+              onClick={onBuyButtonCkick}
+            >
+              Купити
+            </Button>
             <ModelName>{aditional.model}</ModelName>
-            <p>{options.name}</p>
+            <ModelTitle>{options.name}</ModelTitle>
           </Box>
           <Collapse
             ghost
