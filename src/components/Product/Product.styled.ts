@@ -7,6 +7,7 @@ export const StyledPrice = styled.p`
 export const DescriptionsBox = styled.div`
   overflow-y: scroll;
   width: 40%;
+  padding: 16px;
   /* IE and Edge */
   -ms-overflow-style: none;
   /* Firefox */

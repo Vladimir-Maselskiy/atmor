@@ -1,16 +1,41 @@
-import { IAtmorItem } from '@/interfaces/interfaces';
+import { IAtmorItem, ICartItem } from '@/interfaces/interfaces';
 import { ProductWithSwiper } from '../ProductWithSwiper/ProductWithSwiper';
 import { Box } from '../Box/Box';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
 import { DescriptionsBox, StyledPrice } from './Product.styled';
-import { Descriptions } from 'antd';
+import { Button, Descriptions } from 'antd';
+import { useCartContext } from '@/context/state';
+import { useRouter } from 'next/navigation';
 
 type TProps = {
   product: IAtmorItem;
 };
 
 export const Product = ({ product }: TProps) => {
+  const { cart, setCart } = useCartContext();
+  const route = useRouter();
   const { options, aditional } = product;
+
+  const onBuyButtonCkick = () => {
+    const index = cart.findIndex(item => {
+      return item.product.options.article === options.article;
+    });
+    if (index === -1) {
+      setCart(prev => [...prev, { product, quantity: 1 }]);
+    } else {
+      const currentProduct: ICartItem = {
+        ...cart[index],
+        quantity: cart[index].quantity + 1,
+      };
+      setCart(prev => {
+        prev[index] = currentProduct;
+        return [...prev];
+      });
+    }
+    setTimeout(() => {
+      route.push('/cart');
+    }, 500);
+  };
   return (
     <Box
       display="flex"
@@ -23,6 +48,20 @@ export const Product = ({ product }: TProps) => {
         <StyledPrice>{`${getPriceSpacesFormatted(
           product.options.price
         )} грн`}</StyledPrice>
+        <Button
+          type="primary"
+          style={{
+            backgroundColor: 'var(--accent-color)',
+            fontWeight: 600,
+            boxShadow: 'none',
+            marginTop: 20,
+            width: 140,
+            borderRadius: 0,
+          }}
+          onClick={onBuyButtonCkick}
+        >
+          Купити
+        </Button>
         <Box mt={40}>
           <Descriptions title="Всі характеристики" column={1}>
             <Descriptions.Item label="Назва">{options.name}</Descriptions.Item>
@@ -45,7 +84,7 @@ export const Product = ({ product }: TProps) => {
               {aditional.appointment}
             </Descriptions.Item>
             <Descriptions.Item label="Комплетація">
-              {aditional.completeSet}
+              {aditional.completeSet}&quot;
             </Descriptions.Item>
             <Descriptions.Item label="Габарити">
               <Box>

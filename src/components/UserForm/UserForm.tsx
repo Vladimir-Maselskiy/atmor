@@ -8,10 +8,12 @@ import {
   StyledForm,
   StyledInput,
 } from './UserForm.styled';
-import { Button, Form, InputRef } from 'antd';
+import { Button, Descriptions, Divider, Form, InputRef } from 'antd';
 import { getAutoCompletedPhoneValue } from '@/utils/getAutoCompletedPhoneValue';
 import { Box } from '../Box/Box';
 import { OrderItem } from '../OrderItem/OrderItem';
+import { getTotalCartCost } from '@/utils/getTotalCartCost';
+import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -21,6 +23,24 @@ const triggers = {
   email: 'onBlur',
   phone: 'onBlur',
 } as { [key: string]: TTgiggerTypes };
+
+const availableUkraineOperatorsCodes = [
+  '039',
+  '050',
+  '063',
+  '066',
+  '067',
+  '068',
+  '091',
+  '092',
+  '093',
+  '094',
+  '095',
+  '096',
+  '097',
+  '098',
+  '099',
+];
 
 export const UserForm = () => {
   const { cart, setCart } = useCartContext();
@@ -96,8 +116,34 @@ export const UserForm = () => {
     return Promise.resolve();
   };
 
-  const validateEmail = (formField: any, value: any) => {
-    console.log('formField', formField);
+  const validatePhone = (_: any, value: any) => {
+    setValidateTrigger(prev => ({ ...prev, phone: 'onChange' }));
+    if (!value) {
+      return Promise.reject(`Номер телефону обов'язковий`);
+    }
+    const phoneOnlyNumbers = phoneValue
+      .split('')
+      .filter(char => /^[0-9]$/.test(char))
+      .join('');
+    const phoneOperatorCode = phoneOnlyNumbers.slice(2, 5);
+    console.log(
+      'phoneOnlyNumbers',
+      phoneOnlyNumbers,
+      'phoneOperatorCode',
+      phoneOperatorCode
+    );
+    if (
+      phoneOnlyNumbers.length !== 12 ||
+      phoneOperatorCode.length !== 3 ||
+      !availableUkraineOperatorsCodes.includes(phoneOperatorCode)
+    ) {
+      return Promise.reject('Введіть валідний телефону');
+    }
+    setValidateTrigger(prev => ({ ...prev, phone: 'onBlur' }));
+
+    return Promise.resolve();
+  };
+  const validateEmail = (_: any, value: any) => {
     setValidateTrigger(prev => ({ ...prev, email: 'onChange' }));
     if (!value) {
       return Promise.reject(`Email обов'язковий`);
@@ -116,7 +162,8 @@ export const UserForm = () => {
         <FieldWrapper
           name="user-phone"
           label="Номер телефону"
-          rules={[{ required: true, message: 'Введіть номер телефону' }]}
+          validateTrigger={[validateTrigger.phone]}
+          rules={[{ required: true, validator: validatePhone }]}
         >
           <StyledInput
             ref={phoneInputRef}
@@ -165,6 +212,21 @@ export const UserForm = () => {
         >
           <StyledInput placeholder="Введіть ваш email"></StyledInput>
         </FieldWrapper>
+        <Divider />
+        <p>Відомості щодо доставки</p>
+        <FieldWrapper
+          name="user-city"
+          label="Населений пункт"
+          validateTrigger={[validateTrigger.email]}
+          rules={[
+            {
+              required: true,
+              validator: validateEmail,
+            },
+          ]}
+        >
+          <StyledInput placeholder="Введіть ваш населений пункт"></StyledInput>
+        </FieldWrapper>
 
         <FieldWrapper>
           <Button
@@ -184,6 +246,10 @@ export const UserForm = () => {
             <OrderItem key={item.product.options.article} item={item} />
           ))}
         </ul>
+        <OrderItemsTitle>
+          Вартість замовлення: {getPriceSpacesFormatted(getTotalCartCost(cart))}
+          &nbsp; грн
+        </OrderItemsTitle>
       </Box>
     </StyledForm>
   );
