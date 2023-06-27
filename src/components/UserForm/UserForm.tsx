@@ -117,7 +117,6 @@ export const UserForm = () => {
   };
 
   const validatePhone = (_: any, value: any) => {
-    setValidateTrigger(prev => ({ ...prev, phone: 'onChange' }));
     if (!value) {
       return Promise.reject(`Номер телефону обов'язковий`);
     }
@@ -126,21 +125,14 @@ export const UserForm = () => {
       .filter(char => /^[0-9]$/.test(char))
       .join('');
     const phoneOperatorCode = phoneOnlyNumbers.slice(2, 5);
-    console.log(
-      'phoneOnlyNumbers',
-      phoneOnlyNumbers,
-      'phoneOperatorCode',
-      phoneOperatorCode
-    );
+
     if (
       phoneOnlyNumbers.length !== 12 ||
       phoneOperatorCode.length !== 3 ||
       !availableUkraineOperatorsCodes.includes(phoneOperatorCode)
     ) {
-      return Promise.reject('Введіть валідний телефону');
+      return Promise.reject('Введіть валідний номер телефону');
     }
-    setValidateTrigger(prev => ({ ...prev, phone: 'onBlur' }));
-
     return Promise.resolve();
   };
   const validateEmail = (_: any, value: any) => {
