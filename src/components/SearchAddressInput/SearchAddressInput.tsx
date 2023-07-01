@@ -3,12 +3,12 @@ import { Select } from 'antd';
 import type { SelectProps } from 'antd';
 
 type TProps = {
-  setCityRef: React.Dispatch<React.SetStateAction<string>>;
+  cityRef: string;
 };
 
 let timeout: ReturnType<typeof setTimeout> | null;
 
-export const SearchCityInput = ({ setCityRef }: TProps) => {
+export const SearchAddressInput = ({ cityRef }: TProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [deliveryCities, setDeliveryCities] = useState<SelectProps['options']>(
     []
@@ -42,9 +42,7 @@ export const SearchCityInput = ({ setCityRef }: TProps) => {
     timeout = setTimeout(() => searchCity(newValue), 300);
   };
 
-  const handleChange = (newValue: any) => {
-    setCityRef(newValue);
-  };
+  const handleChange = (newValue: any) => {};
 
   return (
     <Select

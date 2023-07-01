@@ -15,6 +15,7 @@ import { OrderItem } from '../OrderItem/OrderItem';
 import { getTotalCartCost } from '@/utils/getTotalCartCost';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
 import { SearchCityInput } from '../SearchCityInput/SearchCityInput';
+import { SearchAddressInput } from '../SearchAddressInput/SearchAddressInput';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -55,6 +56,7 @@ export const UserForm = () => {
   const [phoneValue, setPhoneValue] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectionStart, setSelectionStart] = useState(0);
+  const [cityRef, setCityRef] = useState('');
 
   useEffect(() => {
     if (isDeleting) {
@@ -217,9 +219,13 @@ export const UserForm = () => {
             },
           ]}
         >
-        <SearchCityInput />
-
+          <SearchCityInput setCityRef={setCityRef} />
         </FieldWrapper>
+        {cityRef && (
+          <FieldWrapper name="user-address" label="Відділення Нової Пошти">
+            <SearchAddressInput cityRef={cityRef} />
+          </FieldWrapper>
+        )}
 
         <FieldWrapper>
           <Button
