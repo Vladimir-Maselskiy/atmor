@@ -217,7 +217,8 @@ export const UserForm = () => {
             },
           ]}
         >
-          {/* <StyledInput placeholder="Введіть ваш населений пункт"></StyledInput> */}
+        <SearchCityInput />
+
         </FieldWrapper>
 
         <FieldWrapper>
@@ -230,7 +231,6 @@ export const UserForm = () => {
             Підтвердити
           </Button>
         </FieldWrapper>
-        <SearchCityInput />
       </Box>
       <Box>
         <OrderItemsTitle>ТОВАРИ В ЗАМОВЛЕННІ</OrderItemsTitle>

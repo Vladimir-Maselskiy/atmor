@@ -32,12 +32,7 @@ export default function RootLayout({
                 controlOutline: 'none',
               },
               Select: {
-                // colorBgLayout: 'var(--accent-color)',
-                // colorPrimary: 'var(--accent-color)',
-                // colorBgBase: 'var(--accent-color)',
-                // colorPrimaryActive: 'var(--accent-color)',
-                // colorPrimaryTextActive: 'var(--accent-color)',
-                // colorInfoActive: 'var(--accent-color)',
+                controlOutline: 'none',
                 controlItemBgActive: 'var(--accent-color-bg-active)',
               },
             },

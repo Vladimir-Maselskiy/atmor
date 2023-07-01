@@ -47,12 +47,13 @@ export const SearchCityInput = () => {
       showSearch
       dropdownAlign={{ overflow: { adjustX: false, adjustY: false } }}
       allowClear
-      loading={false}
+      //   loading={true}
       value={value}
       placeholder="Введіть населений пункт доставки"
-      style={{ width: '100%' }}
+      style={{ width: '100%', borderRadius: 0 }}
+      size="large"
       defaultActiveFirstOption={false}
-      showArrow={false}
+      //   showArrow={false}
       filterOption={false}
       onChange={handleChange}
       onSearch={handleSearch}
