@@ -14,6 +14,7 @@ import { Box } from '../Box/Box';
 import { OrderItem } from '../OrderItem/OrderItem';
 import { getTotalCartCost } from '@/utils/getTotalCartCost';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
+import { SearchCityInput } from '../SearchCityInput/SearchCityInput';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -63,7 +64,6 @@ export const UserForm = () => {
       );
     } else {
       setTimeout(() => {
-        console.log('phoneValue', phoneValue.length);
         phoneInputRef.current?.input?.setSelectionRange(
           phoneValue.length,
           phoneValue.length
@@ -217,7 +217,8 @@ export const UserForm = () => {
             },
           ]}
         >
-          <StyledInput placeholder="Введіть ваш населений пункт"></StyledInput>
+          <SearchCityInput />
+          {/* <StyledInput placeholder="Введіть ваш населений пункт"></StyledInput> */}
         </FieldWrapper>
 
         <FieldWrapper>
