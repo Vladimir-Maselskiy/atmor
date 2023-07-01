@@ -28,7 +28,8 @@ export const SearchCityInput = () => {
 
       fetch(url, options)
         .then(res => res.json())
-        .then(setDeliveryCities);
+        .then(setDeliveryCities)
+        .catch(error => setDeliveryCities([]));
     };
 
     if (newValue) {
@@ -44,6 +45,9 @@ export const SearchCityInput = () => {
   return (
     <Select
       showSearch
+      dropdownAlign={{ overflow: { adjustX: false, adjustY: false } }}
+      allowClear
+      loading={false}
       value={value}
       placeholder="Введіть населений пункт доставки"
       style={{ width: '100%' }}
@@ -53,6 +57,7 @@ export const SearchCityInput = () => {
       onChange={handleChange}
       onSearch={handleSearch}
       notFoundContent={null}
+      placement="bottomRight"
       options={(deliveryCities || []).map(city => ({
         value: city.Ref,
         label: city.Present,
