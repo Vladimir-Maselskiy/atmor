@@ -34,17 +34,27 @@ export const SearchWarehousesInput = ({ cityRef }: TProps) => {
   }, [cityRef]);
 
   const handleSearch = (newValue: string) => {
+    console.log('handleSearch newValue', newValue);
     if (timeout) {
       clearTimeout(timeout);
       timeout = null;
     }
-    const searchCity = (value: string) => {
-      const cityName = value;
-
+    const SearchByString = (stringValue: string) => {
       setIsLoading(true);
+      const options = {
+        method: 'POST',
+        body: JSON.stringify({ cityRef, findByString: stringValue }),
+      };
+      fetch(url, options)
+        .then(res => res.json())
+        .then(setWarehouses)
+        .catch(_ => setWarehouses([]))
+        .finally(() => {
+          setIsLoading(false);
+        });
     };
 
-    timeout = setTimeout(() => searchCity(newValue), 300);
+    timeout = setTimeout(() => SearchByString(newValue), 300);
   };
 
   const handleChange = (newValue: any) => {
@@ -58,14 +68,13 @@ export const SearchWarehousesInput = ({ cityRef }: TProps) => {
       dropdownAlign={{ overflow: { adjustX: false, adjustY: false } }}
       allowClear={!isLoading}
       loading={isLoading}
-      //   value={value}
       placeholder="Введіть населений пункт доставки"
       style={{ width: '100%', maxWidth: 424, borderRadius: 0 }}
       size="large"
       defaultActiveFirstOption={false}
       filterOption={false}
       onChange={handleChange}
-      //   onSearch={handleSearch}
+      onSearch={handleSearch}
       notFoundContent={null}
       placement="bottomRight"
       options={(warehouses || []).map(warehous => ({

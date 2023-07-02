@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
     calledMethod: 'getWarehouses',
     methodProperties: {
       CityRef: cityRef,
-      // FindByString: findByString,
+      FindByString: findByString,
     },
   };
 
