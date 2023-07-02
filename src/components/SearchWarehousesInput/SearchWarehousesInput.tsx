@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Select } from 'antd';
 import type { SelectProps } from 'antd';
 
@@ -7,12 +7,31 @@ type TProps = {
 };
 
 let timeout: ReturnType<typeof setTimeout> | null;
+const url = `${process.env.NEXT_PUBLIC_API_HOST}/novaposhta/searchWarehouses`;
 
-export const SearchAddressInput = ({ cityRef }: TProps) => {
+export const SearchWarehousesInput = ({ cityRef }: TProps) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [deliveryCities, setDeliveryCities] = useState<SelectProps['options']>(
-    []
-  );
+  const [value, setValue] = useState('');
+  const [warehouses, setWarehouses] = useState<SelectProps['options']>([]);
+
+  useEffect(() => {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({ cityRef }),
+    };
+
+    fetch(url, options)
+      .then(res => res.json())
+      .then(setWarehouses)
+      .catch(_ => setWarehouses([]))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [cityRef]);
+
+  useEffect(() => {
+    setValue('');
+  }, [cityRef]);
 
   const handleSearch = (newValue: string) => {
     if (timeout) {
@@ -22,30 +41,19 @@ export const SearchAddressInput = ({ cityRef }: TProps) => {
     const searchCity = (value: string) => {
       const cityName = value;
 
-      const url = `${process.env.NEXT_PUBLIC_API_HOST}/novaposhta/searchCity`;
-
-      const options = {
-        method: 'POST',
-        body: JSON.stringify({ cityName }),
-      };
       setIsLoading(true);
-
-      fetch(url, options)
-        .then(res => res.json())
-        .then(setDeliveryCities)
-        .catch(_ => setDeliveryCities([]))
-        .finally(() => {
-          setIsLoading(false);
-        });
     };
 
     timeout = setTimeout(() => searchCity(newValue), 300);
   };
 
-  const handleChange = (newValue: any) => {};
+  const handleChange = (newValue: any) => {
+    setValue(newValue);
+  };
 
   return (
     <Select
+      value={value}
       showSearch
       dropdownAlign={{ overflow: { adjustX: false, adjustY: false } }}
       allowClear={!isLoading}
@@ -57,12 +65,12 @@ export const SearchAddressInput = ({ cityRef }: TProps) => {
       defaultActiveFirstOption={false}
       filterOption={false}
       onChange={handleChange}
-      onSearch={handleSearch}
+      //   onSearch={handleSearch}
       notFoundContent={null}
       placement="bottomRight"
-      options={(deliveryCities || []).map(city => ({
-        value: city.Ref,
-        label: city.Present,
+      options={(warehouses || []).map(warehous => ({
+        value: warehous.Description,
+        label: warehous.Description,
       }))}
     />
   );

@@ -15,7 +15,7 @@ import { OrderItem } from '../OrderItem/OrderItem';
 import { getTotalCartCost } from '@/utils/getTotalCartCost';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
 import { SearchCityInput } from '../SearchCityInput/SearchCityInput';
-import { SearchAddressInput } from '../SearchAddressInput/SearchAddressInput';
+import { SearchWarehousesInput } from '../SearchWarehousesInput/SearchWarehousesInput';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -223,7 +223,7 @@ export const UserForm = () => {
         </FieldWrapper>
         {cityRef && (
           <FieldWrapper name="user-address" label="Відділення Нової Пошти">
-            <SearchAddressInput cityRef={cityRef} />
+            <SearchWarehousesInput cityRef={cityRef} />
           </FieldWrapper>
         )}
 

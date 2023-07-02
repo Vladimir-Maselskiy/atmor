@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
     calledMethod: 'getWarehouses',
     methodProperties: {
       CityRef: cityRef,
-      FindByString: findByString,
+      // FindByString: findByString,
     },
   };
 
@@ -21,17 +21,12 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
     method: 'POST',
     body: JSON.stringify(body),
   };
-
-  const fetchData = await fetch(url, options).then(res => res.json());
-
-  const { data } = fetchData;
-  const addresses = data[0]?.Addresses;
-  if (Array.isArray(addresses)) {
-    const addressesWithWarehouses = addresses.filter(
-      address => address.Warehouses > 0
-    );
-    return NextResponse.json(addressesWithWarehouses);
+  try {
+    const fetchData = await fetch(url, options).then(res => res.json());
+    const { data } = fetchData;
+    if (Array.isArray(data)) return NextResponse.json(data);
+    throw new Error();
+  } catch {
+    return NextResponse.error();
   }
-
-  return NextResponse.error();
 };

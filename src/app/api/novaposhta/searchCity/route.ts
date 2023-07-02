@@ -21,10 +21,13 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
 
   const fetchData = await fetch(url, options).then(res => res.json());
 
-  const { data: warehouses } = fetchData;
-
-  if (Array.isArray(warehouses)) {
-    return NextResponse.json(warehouses);
+  const { data } = fetchData;
+  const addresses = data[0]?.Addresses;
+  if (Array.isArray(addresses)) {
+    const addressesWithWarehouses = addresses.filter(
+      address => address.Warehouses > 0
+    );
+    return NextResponse.json(addressesWithWarehouses);
   }
 
   return NextResponse.error();

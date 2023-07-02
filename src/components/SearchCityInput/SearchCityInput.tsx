@@ -63,7 +63,7 @@ export const SearchCityInput = ({ setCityRef }: TProps) => {
       notFoundContent={null}
       placement="bottomRight"
       options={(deliveryCities || []).map(city => ({
-        value: city.Ref,
+        value: city.DeliveryCity,
         label: city.Present,
       }))}
     />
