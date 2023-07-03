@@ -37,9 +37,8 @@ export const OrderItem = ({ item }: TProps) => {
             height={256}
             style={{ objectFit: 'contain', objectPosition: 'center' }}
           />
-          
         </Box>
-        <Box>
+        <Box flexGrow={1}>
           <Box marginLeft={20}>
             <ModelName>{aditional.model}</ModelName>
             <p>{options.name}</p>

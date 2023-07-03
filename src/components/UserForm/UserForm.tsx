@@ -2,20 +2,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useCartContext } from '@/context/state';
 import { useRouter } from 'next/navigation';
-import {
-  FieldWrapper,
-  OrderItemsTitle,
-  StyledForm,
-  StyledInput,
-} from './UserForm.styled';
-import { Button, Descriptions, Divider, Form, InputRef } from 'antd';
+import { FieldWrapper, StyledForm, StyledInput } from './UserForm.styled';
+import { Button, Divider, Form, InputRef } from 'antd';
 import { getAutoCompletedPhoneValue } from '@/utils/getAutoCompletedPhoneValue';
 import { Box } from '../Box/Box';
-import { OrderItem } from '../OrderItem/OrderItem';
-import { getTotalCartCost } from '@/utils/getTotalCartCost';
-import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
+
 import { SearchCityInput } from '../SearchCityInput/SearchCityInput';
 import { SearchWarehousesInput } from '../SearchWarehousesInput/SearchWarehousesInput';
+import { OrderList } from '../OrderList/OrderList';
+import { getIsFormSubmitDisabled } from '@/utils/getIsFormSubmitDisabled';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -25,6 +20,13 @@ const triggers = {
   email: 'onBlur',
   phone: 'onBlur',
 } as { [key: string]: TTgiggerTypes };
+
+const initialFormValidation = {
+  phone: false,
+  name: false,
+  surname: false,
+  email: false,
+};
 
 const availableUkraineOperatorsCodes = [
   '039',
@@ -45,7 +47,6 @@ const availableUkraineOperatorsCodes = [
 ];
 
 export const UserForm = () => {
-  const { cart, setCart } = useCartContext();
   const ref = useRef<HTMLButtonElement>(null);
   const phoneInputRef = useRef<InputRef>(null);
   const router = useRouter();
@@ -57,6 +58,8 @@ export const UserForm = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectionStart, setSelectionStart] = useState(0);
   const [cityRef, setCityRef] = useState('');
+  const [isFormSubmitDisabled, setIsFormSubmitDisabled] = useState(true);
+  const [formValidation, setFormValidation] = useState(initialFormValidation);
 
   useEffect(() => {
     if (isDeleting) {
@@ -74,7 +77,12 @@ export const UserForm = () => {
     }
   }, [isDeleting, phoneValue.length, selectionStart]);
 
+  useEffect(() => {
+    setIsFormSubmitDisabled(getIsFormSubmitDisabled(formValidation));
+  }, [formValidation]);
+
   const onPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsFormSubmitDisabled(true);
     const { value } = e.target;
     const selectionStart = phoneInputRef.current?.input?.selectionStart;
     if (selectionStart) setSelectionStart(selectionStart);
@@ -107,14 +115,15 @@ export const UserForm = () => {
     setValidateTrigger(prev => ({ ...prev, [prop]: 'onChange' }));
 
     if (!value) {
+      setFormValidation(prev => ({ ...prev, [prop]: false }));
       return Promise.reject(`${label} обов'язкове`);
     }
     if (!/^[\u0400-\u04FF']{2,}$/i.test(value)) {
+      setFormValidation(prev => ({ ...prev, [prop]: false }));
       return Promise.reject(`Введіть ${label.toLowerCase()} кирилицею`);
     }
-
     setValidateTrigger(prev => ({ ...prev, [prop]: 'onBlur' }));
-
+    setFormValidation(prev => ({ ...prev, [prop]: true }));
     return Promise.resolve();
   };
 
@@ -133,20 +142,25 @@ export const UserForm = () => {
       phoneOperatorCode.length !== 3 ||
       !availableUkraineOperatorsCodes.includes(phoneOperatorCode)
     ) {
+      setFormValidation(prev => ({ ...prev, phone: false }));
       return Promise.reject('Введіть валідний номер телефону');
     }
+    setFormValidation(prev => ({ ...prev, phone: true }));
     return Promise.resolve();
   };
   const validateEmail = (_: any, value: any) => {
     setValidateTrigger(prev => ({ ...prev, email: 'onChange' }));
     if (!value) {
+      setFormValidation(prev => ({ ...prev, email: false }));
       return Promise.reject(`Email обов'язковий`);
     }
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+      setFormValidation(prev => ({ ...prev, email: false }));
       return Promise.reject(`Введіть електронну пошту`);
     }
     setValidateTrigger(prev => ({ ...prev, email: 'onBlur' }));
 
+    setFormValidation(prev => ({ ...prev, email: true }));
     return Promise.resolve();
   };
 
@@ -177,7 +191,12 @@ export const UserForm = () => {
               },
             ]}
           >
-            <StyledInput placeholder="Введіть ваше ім'я"></StyledInput>
+            <StyledInput
+              placeholder="Введіть ваше ім'я"
+              onChange={() => {
+                setIsFormSubmitDisabled(true);
+              }}
+            ></StyledInput>
           </FieldWrapper>
           <FieldWrapper
             name="user-surname"
@@ -190,7 +209,12 @@ export const UserForm = () => {
               },
             ]}
           >
-            <StyledInput placeholder="Введіть ваше прізвище"></StyledInput>
+            <StyledInput
+              placeholder="Введіть ваше прізвище"
+              onChange={() => {
+                setIsFormSubmitDisabled(true);
+              }}
+            ></StyledInput>
           </FieldWrapper>
         </Box>
         <FieldWrapper
@@ -204,7 +228,12 @@ export const UserForm = () => {
             },
           ]}
         >
-          <StyledInput placeholder="Введіть ваш email"></StyledInput>
+          <StyledInput
+            placeholder="Введіть ваш email"
+            onChange={() => {
+              setIsFormSubmitDisabled(true);
+            }}
+          ></StyledInput>
         </FieldWrapper>
         <Divider />
         <p>Відомості щодо доставки</p>
@@ -226,10 +255,13 @@ export const UserForm = () => {
             <SearchWarehousesInput cityRef={cityRef} />
           </FieldWrapper>
         )}
-
+      </Box>
+      <Box>
+        <OrderList />
         <FieldWrapper>
           <Button
-            style={{ borderRadius: 0 }}
+            disabled={isFormSubmitDisabled}
+            style={{ borderRadius: 0, marginTop: 20 }}
             type="primary"
             htmlType="submit"
             ref={ref}
@@ -237,18 +269,6 @@ export const UserForm = () => {
             Підтвердити
           </Button>
         </FieldWrapper>
-      </Box>
-      <Box>
-        <OrderItemsTitle>ТОВАРИ В ЗАМОВЛЕННІ</OrderItemsTitle>
-        <ul>
-          {cart.map(item => (
-            <OrderItem key={item.product.options.article} item={item} />
-          ))}
-        </ul>
-        <OrderItemsTitle>
-          Вартість замовлення: {getPriceSpacesFormatted(getTotalCartCost(cart))}
-          &nbsp; грн
-        </OrderItemsTitle>
       </Box>
     </StyledForm>
   );

@@ -30,6 +30,3 @@ export const StyledInput = styled(Input)`
     box-shadow: none;
   }
 `;
-export const OrderItemsTitle = styled.p`
-  font-weight: 700;
-`;
