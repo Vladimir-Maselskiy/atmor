@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
-import { Select } from 'antd';
+import { FormInstance, Select } from 'antd';
 import type { SelectProps } from 'antd';
+import { getCityPresent } from '@/utils/getCityPresent';
+import { TFormValidatonType } from '../UserForm/UserForm';
+import { getIsDeliveryCityValid } from '@/utils/getIsDeliveryCityValid';
 
 type TProps = {
   setCityRef: React.Dispatch<React.SetStateAction<string>>;
+  form: FormInstance<any>;
+  setFormValidation: React.Dispatch<React.SetStateAction<TFormValidatonType>>;
 };
 
 let timeout: ReturnType<typeof setTimeout> | null;
 
-export const SearchCityInput = ({ setCityRef }: TProps) => {
+export const SearchCityInput = ({
+  setCityRef,
+  form,
+  setFormValidation,
+}: TProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState('');
   const [deliveryCities, setDeliveryCities] = useState<SelectProps['options']>(
     []
   );
@@ -44,15 +54,20 @@ export const SearchCityInput = ({ setCityRef }: TProps) => {
 
   const handleChange = (newValue: any) => {
     setCityRef(newValue);
+    const cityPresent = getCityPresent({ deliveryCities, newValue });
+    form.setFieldValue('user-city', cityPresent);
+    setValue(newValue);
+    const isDeliveryCityValid = getIsDeliveryCityValid(newValue as string);
+    setFormValidation(p => ({ ...p, city: isDeliveryCityValid }));
   };
 
   return (
     <Select
+      value={value}
       showSearch
       dropdownAlign={{ overflow: { adjustX: false, adjustY: false } }}
       allowClear={!isLoading}
       loading={isLoading}
-      //   value={value}
       placeholder="Введіть населений пункт доставки"
       style={{ width: '100%', maxWidth: 424, borderRadius: 0 }}
       size="large"

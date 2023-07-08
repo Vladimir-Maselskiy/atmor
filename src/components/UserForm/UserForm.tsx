@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useCartContext } from '@/context/state';
 import { useRouter } from 'next/navigation';
 import { FieldWrapper, StyledForm, StyledInput } from './UserForm.styled';
-import { Button, Divider, Form, InputRef } from 'antd';
+import { Button, Divider, Form, FormInstance, InputRef } from 'antd';
 import { getAutoCompletedPhoneValue } from '@/utils/getAutoCompletedPhoneValue';
 import { Box } from '../Box/Box';
 
@@ -26,7 +26,11 @@ const initialFormValidation = {
   name: false,
   surname: false,
   email: false,
+  city: false,
+  warehouse: false,
 };
+
+export type TFormValidatonType = typeof initialFormValidation;
 
 const availableUkraineOperatorsCodes = [
   '039',
@@ -49,7 +53,6 @@ const availableUkraineOperatorsCodes = [
 export const UserForm = () => {
   const ref = useRef<HTMLButtonElement>(null);
   const phoneInputRef = useRef<InputRef>(null);
-  const router = useRouter();
 
   const [form] = Form.useForm();
 
@@ -97,9 +100,10 @@ export const UserForm = () => {
   };
 
   const onFinish = (values: unknown) => {
-    setTimeout(() => {
-      router.push('/thank-page');
-    }, 1000);
+    // setTimeout(() => {
+    //   router.push('/thank-page');
+    // }, 1000);
+    console.log('values', values);
   };
 
   const validateNameAndSurName = (formField: any, value: any) => {
@@ -148,6 +152,7 @@ export const UserForm = () => {
     setFormValidation(prev => ({ ...prev, phone: true }));
     return Promise.resolve();
   };
+
   const validateEmail = (_: any, value: any) => {
     setValidateTrigger(prev => ({ ...prev, email: 'onChange' }));
     if (!value) {
@@ -161,6 +166,15 @@ export const UserForm = () => {
     setValidateTrigger(prev => ({ ...prev, email: 'onBlur' }));
 
     setFormValidation(prev => ({ ...prev, email: true }));
+    return Promise.resolve();
+  };
+
+  const validateCity = (_: any, value: any) => {
+    if (!value) {
+      console.log('Promise.reject');
+      return Promise.reject(`Виберіть населений пункт`);
+    }
+    console.log('Promise.resolve()');
     return Promise.resolve();
   };
 
@@ -179,6 +193,7 @@ export const UserForm = () => {
             onChange={onPhoneChange}
           ></StyledInput>
         </FieldWrapper>
+
         <Box display="flex" gridGap={40}>
           <FieldWrapper
             name="user-name"
@@ -198,6 +213,7 @@ export const UserForm = () => {
               }}
             ></StyledInput>
           </FieldWrapper>
+
           <FieldWrapper
             name="user-surname"
             label="Прізвище"
@@ -235,23 +251,39 @@ export const UserForm = () => {
             }}
           ></StyledInput>
         </FieldWrapper>
+
         <Divider />
+
         <p>Відомості щодо доставки</p>
         <FieldWrapper
           name="user-city"
           label="Населений пункт"
-          validateTrigger={[validateTrigger.email]}
+          validateTrigger="onChange"
+          style={{ marginTop: 20 }}
           rules={[
             {
               required: true,
-              validator: validateEmail,
+              validator: validateCity,
             },
           ]}
         >
-          <SearchCityInput setCityRef={setCityRef} />
+          <SearchCityInput
+            setCityRef={setCityRef}
+            form={form}
+            setFormValidation={setFormValidation}
+          />
         </FieldWrapper>
+
         {cityRef && (
-          <FieldWrapper name="user-address" label="Відділення Нової Пошти">
+          <FieldWrapper
+            name="user-address"
+            label="Відділення Нової Пошти"
+            // rules={[
+            //   {
+            //     required: true,
+            //   },
+            // ]}
+          >
             <SearchWarehousesInput cityRef={cityRef} />
           </FieldWrapper>
         )}

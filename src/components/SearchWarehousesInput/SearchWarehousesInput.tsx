@@ -34,7 +34,6 @@ export const SearchWarehousesInput = ({ cityRef }: TProps) => {
   }, [cityRef]);
 
   const handleSearch = (newValue: string) => {
-    console.log('handleSearch newValue', newValue);
     if (timeout) {
       clearTimeout(timeout);
       timeout = null;
@@ -54,7 +53,7 @@ export const SearchWarehousesInput = ({ cityRef }: TProps) => {
         });
     };
 
-    timeout = setTimeout(() => SearchByString(newValue), 300);
+    timeout = setTimeout(() => SearchByString(newValue), 3000);
   };
 
   const handleChange = (newValue: any) => {
