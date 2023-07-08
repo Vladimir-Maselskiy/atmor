@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Select } from 'antd';
+import { FormInstance, Select } from 'antd';
 import type { SelectProps } from 'antd';
+import { TFormValidatonType } from '../UserForm/UserForm';
+import { getIsDeliveryWarehouseValid } from '@/utils/getIsDeliveryWarehouseValid';
 
 type TProps = {
   cityRef: string;
+  form: FormInstance<any>;
+  setFormValidation: React.Dispatch<React.SetStateAction<TFormValidatonType>>;
 };
 
 let timeout: ReturnType<typeof setTimeout> | null;
 const url = `${process.env.NEXT_PUBLIC_API_HOST}/novaposhta/searchWarehouses`;
 
-export const SearchWarehousesInput = ({ cityRef }: TProps) => {
+export const SearchWarehousesInput = ({
+  cityRef,
+  form,
+  setFormValidation,
+}: TProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState('');
   const [warehouses, setWarehouses] = useState<SelectProps['options']>([]);
@@ -58,6 +66,12 @@ export const SearchWarehousesInput = ({ cityRef }: TProps) => {
 
   const handleChange = (newValue: any) => {
     setValue(newValue);
+
+    form.setFieldValue('user-warehouse', newValue);
+    const isDeliveryWarehouseValid = getIsDeliveryWarehouseValid(
+      newValue as string
+    );
+    setFormValidation(p => ({ ...p, warehouse: isDeliveryWarehouseValid }));
   };
 
   return (

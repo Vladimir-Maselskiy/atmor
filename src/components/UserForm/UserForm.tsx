@@ -276,15 +276,19 @@ export const UserForm = () => {
 
         {cityRef && (
           <FieldWrapper
-            name="user-address"
+            name="user-warehouse"
             label="Відділення Нової Пошти"
-            // rules={[
-            //   {
-            //     required: true,
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
           >
-            <SearchWarehousesInput cityRef={cityRef} />
+            <SearchWarehousesInput
+              cityRef={cityRef}
+              form={form}
+              setFormValidation={setFormValidation}
+            />
           </FieldWrapper>
         )}
       </Box>
