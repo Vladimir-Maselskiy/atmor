@@ -7,6 +7,7 @@ import { CartList } from './Cart.styled';
 import { CartFooter } from '../CartFooter/CartFooter';
 import { Box } from '../Box/Box';
 import { Empty } from 'antd';
+import Link from 'next/link';
 
 export const Cart = () => {
   const { cart } = useCartContext();
@@ -31,7 +32,14 @@ export const Cart = () => {
           image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
           imageStyle={{ height: 60 }}
           description={<span>В корзині немає товарів...</span>}
-        />
+          style={{ marginTop: 20 }}
+        >
+          <Link href={'/products'}>
+            <span style={{ textDecoration: 'underline' }}>
+              Перейти до вибору нагрівачів
+            </span>
+          </Link>{' '}
+        </Empty>
       )}
       <Box ref={cartFooterRef}>
         <CartFooter />

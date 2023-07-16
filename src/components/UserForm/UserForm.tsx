@@ -11,6 +11,8 @@ import { SearchCityInput } from '../SearchCityInput/SearchCityInput';
 import { SearchWarehousesInput } from '../SearchWarehousesInput/SearchWarehousesInput';
 import { OrderList } from '../OrderList/OrderList';
 import { getIsFormSubmitDisabled } from '@/utils/getIsFormSubmitDisabled';
+import { style } from 'styled-system';
+import { RadioPaymentMethod } from '../RadioPaymentMethod/RadioPaymentMethod';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -103,6 +105,7 @@ export const UserForm = () => {
     // setTimeout(() => {
     //   router.push('/thank-page');
     // }, 1000);
+    console.log('values', values);
   };
 
   const validateNameAndSurName = (formField: any, value: any) => {
@@ -291,6 +294,22 @@ export const UserForm = () => {
       </Box>
       <Box>
         <OrderList />
+        <FieldWrapper
+          name="paymaent-method"
+          label="Спосіб оплати"
+          // rules={[
+          //   {
+          //     required: true,
+          //   },
+          // ]}
+          style={{ marginTop: 20 }}
+          initialValue={'upon receipt'}
+        >
+          <RadioPaymentMethod
+            form={form}
+            setFormValidation={setFormValidation}
+          />
+        </FieldWrapper>
         <FieldWrapper>
           <Button
             disabled={isFormSubmitDisabled}

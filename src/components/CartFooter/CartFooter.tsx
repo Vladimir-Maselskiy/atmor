@@ -1,7 +1,7 @@
 import { useCartContext } from '@/context/state';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
 import { getTotalCartCost } from '@/utils/getTotalCartCost';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '../Box/Box';
 import { Button } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -10,6 +10,16 @@ export const CartFooter = () => {
   const { cart } = useCartContext();
   const router = useRouter();
   const totalCartCost = getPriceSpacesFormatted(getTotalCartCost(cart));
+  const [isContinueButtonDisabled, setIsContinueButtonDisabled] =
+    useState(false);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      setIsContinueButtonDisabled(false);
+    } else {
+      setIsContinueButtonDisabled(true);
+    }
+  }, [cart.length]);
 
   const onContinueShopingButtonClick = () => {
     router.push('./products');
@@ -42,9 +52,12 @@ export const CartFooter = () => {
         <p>Вартість замовлення: {totalCartCost}грн</p>
         <Button
           onClick={onToOrderButtonClick}
+          disabled={isContinueButtonDisabled}
           style={{
             marginTop: 20,
-            backgroundColor: 'var(--accent-color)',
+            backgroundColor: isContinueButtonDisabled
+              ? ''
+              : 'var(--accent-color)',
             color: 'var(--white-color)',
             borderRadius: 0,
           }}
