@@ -25,6 +25,7 @@ export const CartFooter = () => {
       border="2px solid var(--grey-border-color)"
       py={20}
       px={100}
+      mt={20}
     >
       <Box>
         <Button
