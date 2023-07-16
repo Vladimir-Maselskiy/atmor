@@ -27,6 +27,7 @@ export const SearchWarehousesInput = ({
       method: 'POST',
       body: JSON.stringify({ cityRef }),
     };
+    setIsLoading(true);
 
     fetch(url, options)
       .then(res => res.json())
@@ -90,6 +91,7 @@ export const SearchWarehousesInput = ({
       onSearch={handleSearch}
       notFoundContent={null}
       placement="bottomRight"
+      listHeight={128}
       options={(warehouses || []).map(warehous => ({
         value: warehous.Description,
         label: warehous.Description,

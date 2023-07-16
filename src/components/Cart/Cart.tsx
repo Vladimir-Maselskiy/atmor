@@ -14,7 +14,6 @@ export const Cart = () => {
 
   useEffect(() => {
     if (cartFooterRef.current) {
-      console.log('cartFooterRef.current');
       cartFooterRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, []);

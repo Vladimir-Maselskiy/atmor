@@ -77,6 +77,7 @@ export const SearchCityInput = ({
       onSearch={handleSearch}
       notFoundContent={null}
       placement="bottomRight"
+      listHeight={160}
       options={(deliveryCities || []).map(city => ({
         value: city.DeliveryCity,
         label: city.Present,

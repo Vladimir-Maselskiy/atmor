@@ -103,7 +103,6 @@ export const UserForm = () => {
     // setTimeout(() => {
     //   router.push('/thank-page');
     // }, 1000);
-    console.log('values', values);
   };
 
   const validateNameAndSurName = (formField: any, value: any) => {
@@ -171,10 +170,8 @@ export const UserForm = () => {
 
   const validateCity = (_: any, value: any) => {
     if (!value) {
-      console.log('Promise.reject');
       return Promise.reject(`Виберіть населений пункт`);
     }
-    console.log('Promise.resolve()');
     return Promise.resolve();
   };
 

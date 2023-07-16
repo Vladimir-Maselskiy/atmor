@@ -5,7 +5,7 @@ import { UserForm } from '../UserForm/UserForm';
 
 export const Order = () => {
   return (
-    <Box py={115}>
+    <Box pt={115} pb={115}>
       <UserForm />
     </Box>
   );

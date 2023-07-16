@@ -59,7 +59,6 @@ export const CartItem = ({ item }: TProps) => {
       const index = prev.findIndex(
         item => item.product.options.article === options.article
       )!;
-      console.log('index', index);
       prev.splice(index, 1);
       return [...prev];
     });
