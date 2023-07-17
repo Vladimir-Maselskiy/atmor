@@ -31,6 +31,9 @@ export default function RootLayout({
               InputNumber: {
                 controlOutline: 'none',
               },
+              Input: {
+                controlOutline: 'none',
+              },
               Select: {
                 controlOutline: 'none',
                 controlItemBgActive: 'var(--accent-color-bg-active)',

@@ -1,7 +1,5 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import { useCartContext } from '@/context/state';
-import { useRouter } from 'next/navigation';
 import { FieldWrapper, StyledForm, StyledInput } from './UserForm.styled';
 import { Button, Divider, Form, FormInstance, InputRef } from 'antd';
 import { getAutoCompletedPhoneValue } from '@/utils/getAutoCompletedPhoneValue';
@@ -101,11 +99,19 @@ export const UserForm = () => {
     setPhoneValue(autoCompletedPhoneValue);
   };
 
-  const onFinish = (values: unknown) => {
-    // setTimeout(() => {
-    //   router.push('/thank-page');
-    // }, 1000);
-    console.log('values', values);
+  const onFinish = async (values: unknown) => {
+    const url = `${process.env.NEXT_PUBLIC_API_HOST}/telegram/sendMessage`;
+
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({ values }),
+    };
+
+    const res = await fetch(url, options)
+      .then(res => res.json())
+      .catch(console.log);
+
+    console.log(res);
   };
 
   const validateNameAndSurName = (formField: any, value: any) => {
