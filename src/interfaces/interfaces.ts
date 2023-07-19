@@ -38,3 +38,5 @@ export interface IUser {
   address: string;
   phone: string;
 }
+
+export type TPaymemtMethod = 'upon receipt' | 'liqpay' | 'other';

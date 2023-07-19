@@ -1,6 +1,7 @@
 import { FormInstance, Input, Radio, RadioChangeEvent, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { TFormValidatonType } from '../UserForm/UserForm';
+import { TPaymemtMethod } from '@/interfaces/interfaces';
 
 type TProps = {
   form: FormInstance<any>;
@@ -8,9 +9,7 @@ type TProps = {
 };
 
 export const RadioPaymentMethod = ({ form, setFormValidation }: TProps) => {
-  const [value, setValue] = useState<'upon receipt' | 'liqpay' | 'other'>(
-    'upon receipt'
-  );
+  const [value, setValue] = useState<TPaymemtMethod>('upon receipt');
   const [otherInputValue, setOtherInputValue] = useState<string>('');
   const [otherInputCombineValue, setOtherInputCombineValue] = useState<string>(
     value + otherInputValue

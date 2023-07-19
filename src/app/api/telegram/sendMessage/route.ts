@@ -1,3 +1,4 @@
+import { TPaymemtMethod } from '@/interfaces/interfaces';
 import { NextApiResponse } from 'next';
 import { NextResponse, NextRequest } from 'next/server';
 import TelegramBot from 'node-telegram-bot-api';
@@ -7,34 +8,34 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
   let bot: TelegramBot | null = new TelegramBot(process.env.TELEGRAM_BOT!, {
     polling: true,
   });
-  const resBot = await bot.sendMessage(915873774, JSON.stringify(values));
+  const {
+    'user-phone': phone,
+    'user-name': name,
+    'user-surname': surname,
+    'user-email': email,
+    'user-city': city,
+    'user-warehouse': warehouse,
+    'paymaent-method': paymaentMethod,
+  } = values;
+  let paymaentMethodInMessage;
+  switch (paymaentMethod as TPaymemtMethod) {
+    case 'upon receipt':
+      paymaentMethodInMessage = 'Оплата при отриманні';
+      break;
+    case 'liqpay':
+      paymaentMethodInMessage = 'Оплата Liqpay';
+      break;
+    case 'other':
+      paymaentMethodInMessage = 'Інший варіант';
+      break;
+    default:
+      paymaentMethodInMessage = 'Інший варіант';
+  }
+
+  const message = `Імя: ${name}\nПрізвище: ${surname}\nE-mail: ${email}\nТелефон: ${phone}\nНаселений пункт доставки: ${city}\nВідділення НОВОЇ ПОШТИ: ${warehouse}\nМетод оплати: ${paymaentMethodInMessage}\n`;
+  const resBot = await bot.sendMessage(915873774, message);
   bot.stopPolling();
   console.log('resBot', resBot);
-
-  //   const url = process.env.NOVA_POSHTA_URL!;
-
-  //   const body = {
-  //     apiKey: process.env.NOVA_POSHTA_API_KEY,
-  //     modelName: 'Address',
-  //     calledMethod: 'searchSettlements',
-  //     methodProperties: { CityName: cityName, Limit: 20, Page: 1 },
-  //   };
-
-  //   const options = {
-  //     method: 'POST',
-  //     body: JSON.stringify(body),
-  //   };
-
-  //   const fetchData = await fetch(url, options).then(res => res.json());
-
-  //   const { data } = fetchData;
-  //   const addresses = data[0]?.Addresses;
-  //   if (Array.isArray(addresses)) {
-  //     const addressesWithWarehouses = addresses.filter(
-  //       address => address.Warehouses > 0
-  //     );
-  //     return NextResponse.json(addressesWithWarehouses);
-  //   }
 
   return NextResponse.json({});
   return NextResponse.error();
