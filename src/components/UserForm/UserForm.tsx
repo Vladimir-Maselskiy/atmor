@@ -11,6 +11,7 @@ import { OrderList } from '../OrderList/OrderList';
 import { getIsFormSubmitDisabled } from '@/utils/getIsFormSubmitDisabled';
 import { style } from 'styled-system';
 import { RadioPaymentMethod } from '../RadioPaymentMethod/RadioPaymentMethod';
+import { useCartContext } from '@/context/state';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -53,6 +54,7 @@ const availableUkraineOperatorsCodes = [
 export const UserForm = () => {
   const ref = useRef<HTMLButtonElement>(null);
   const phoneInputRef = useRef<InputRef>(null);
+  const { cart } = useCartContext();
 
   const [form] = Form.useForm();
 
@@ -104,7 +106,7 @@ export const UserForm = () => {
 
     const options = {
       method: 'POST',
-      body: JSON.stringify({ values }),
+      body: JSON.stringify({ values, cart }),
     };
 
     const res = await fetch(url, options)
