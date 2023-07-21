@@ -27,7 +27,7 @@ export const GET = async (req: NextRequest, res: NextApiResponse) => {
       });
   };
 
-  bot.onText(/\/start/, msg => {
+  bot.on("message", msg => {
     const chatId = msg.chat.id;
     const messageText = 'Hello! What do you want to do?';
 
