@@ -9,6 +9,8 @@ export const GET = async (req: NextRequest, res: NextApiResponse) => {
     polling: true,
   });
 
+  console.log('inGet');
+
   const sendInlineKeyboard = (
     chatId: number,
     text: string,
@@ -17,6 +19,8 @@ export const GET = async (req: NextRequest, res: NextApiResponse) => {
     const inlineKeyboard = {
       inline_keyboard: buttons,
     };
+    console.log('inSendInlineKeyboard');
+
     if (bot)
       bot.sendMessage(chatId, text, {
         reply_markup: inlineKeyboard,
