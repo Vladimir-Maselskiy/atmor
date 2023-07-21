@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Box } from '../Box/Box';
 import { Logo, LogoText } from '../Logo/Logo';

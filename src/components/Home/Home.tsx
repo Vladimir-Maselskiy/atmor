@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Slider } from '../Slider/Slider';
 import { HomeSolutionNav } from '../HomeSolutionNav/HomeSolutionNav';
