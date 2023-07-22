@@ -11,13 +11,9 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
     polling: true,
   });
 
-  bot.on('message', msg => {
-    console.log('msg', msg);
-  });
   const message = getMessageForTelegramBot(values, cart);
   const resBot = await bot.sendMessage(915873774, message);
   bot.stopPolling();
-  console.log('resBot', resBot);
 
   return NextResponse.json({});
   return NextResponse.error();
