@@ -1,5 +1,5 @@
 import { ICartItem, TPaymemtMethod } from '@/interfaces/interfaces';
-import { ITelegramUpdate } from '@/interfaces/telegram';
+import { ITelegramUpdate, ITelegramUser } from '@/interfaces/telegram';
 import { getMessageForTelegramBot } from '@/utils/getMessageForTelegramBot';
 import { sendInlineKeyboard } from '@/utils/telegram/sendInlineKeyboard';
 import { NextApiResponse } from 'next';
@@ -29,9 +29,21 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
     }
   }
 
-  // bot.on('text', msg => {
-  //   console.log('msg', msg);
-  // });
-  // await bot.stopPolling();
+  if (body['callback_query']) {
+    const { data, from } = body['callback_query'] as {
+      data: 'logOut' | 'signIn';
+      from: ITelegramUser;
+    };
+    const user = getUserFromCallbackQuery(from);
+    switch (data) {
+      case 'signIn':
+        break;
+      case 'logOut':
+        break;
+      default:
+        break;
+    }
+  }
+
   return NextResponse.json({ res: 'Hello' });
 };

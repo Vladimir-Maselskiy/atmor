@@ -13,13 +13,11 @@ const userSchema = new Schema(
       required: [true, 'Email is required'],
     },
     lastName: {
-      type: String,
-      required: [true, 'Email is required'],
+      type: String || undefined,
     },
 
     userName: {
-      type: String,
-      required: [true, 'Email is required'],
+      type: String || undefined,
     },
   },
   { versionKey: false, timestamps: true }

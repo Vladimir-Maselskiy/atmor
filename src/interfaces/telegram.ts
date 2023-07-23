@@ -1,4 +1,4 @@
-interface TelegramUser {
+export interface ITelegramUser {
   id: number;
   first_name: string;
   last_name?: string;
@@ -16,14 +16,14 @@ interface TelegramChat {
 interface TelegramMessage {
   message_id: number;
   text: string;
-  from: TelegramUser;
+  from: ITelegramUser;
   chat: TelegramChat;
   date: number;
 }
 
 interface TelegramCallbackQuery {
   id: string;
-  from: TelegramUser;
+  from: ITelegramUser;
   message: TelegramMessage;
   data: string;
 }
