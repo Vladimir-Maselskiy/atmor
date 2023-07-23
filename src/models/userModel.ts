@@ -4,13 +4,13 @@ import { Schema, model, models } from 'mongoose';
 const userSchema = new Schema(
   {
     userID: {
-      type: String,
-      required: [true, 'Name is required'],
+      type: Number,
+      required: [true, 'userID is required'],
       unique: true,
     },
     firstName: {
       type: String,
-      required: [true, 'Email is required'],
+      required: [true, 'First is required'],
     },
     lastName: {
       type: String || undefined,
