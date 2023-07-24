@@ -3,4 +3,5 @@ export type TMongoDBUser = {
   firstName: string;
   lastName?: string;
   userName?: string;
+  isActive: boolean;
 };

@@ -19,6 +19,11 @@ const userSchema = new Schema(
     userName: {
       type: String || undefined,
     },
+
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
   },
   { versionKey: false, timestamps: true }
 );

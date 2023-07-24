@@ -13,12 +13,21 @@ interface TelegramChat {
   type: string;
 }
 
+interface ITelegramReplyToMessage {
+  message_id: number;
+  from?: {};
+  chat?: {};
+  date: number;
+  text: string;
+}
+
 interface TelegramMessage {
   message_id: number;
   text: string;
   from: ITelegramUser;
   chat: TelegramChat;
   date: number;
+  reply_to_message?: ITelegramReplyToMessage;
 }
 
 interface TelegramCallbackQuery {

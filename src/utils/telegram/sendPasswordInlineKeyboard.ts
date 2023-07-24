@@ -1,19 +1,20 @@
 import TelegramBot, { InlineKeyboardButton } from 'node-telegram-bot-api';
 
-const messageText = 'Привіт! Вибери дію?';
+const messageText = 'Введи пароль';
 
 const buttons: InlineKeyboardButton[][] = [
   [{ text: 'Підписатись на розсилання', callback_data: 'signIn' }],
   [{ text: 'Відписатись від розсилання', callback_data: 'logOut' }],
 ];
 
-export const sendInlineKeyboard = (bot: TelegramBot | null, chatId: number) => {
-  const inlineKeyboard = {
-    inline_keyboard: buttons,
-  };
-
+export const sendPasswordInlineKeyboard = (
+  bot: TelegramBot | null,
+  chatId: number
+) => {
   if (bot)
-    bot.sendMessage(chatId, messageText, {
-      reply_markup: inlineKeyboard,
+    bot.sendMessage(chatId, 'Введіть пароль будь-ласка:', {
+      reply_markup: {
+        force_reply: true,
+      },
     });
 };

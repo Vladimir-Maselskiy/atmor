@@ -2,7 +2,7 @@ import { ITelegramUpdate, ITelegramUser } from '@/interfaces/telegram';
 import { addUserToDB } from '@/utils/mongo/addUserToDB';
 import { removeUserFromDB } from '@/utils/mongo/removeUserFromDB';
 import { getUserFromCallbackQuery } from '@/utils/telegram/getUserFromCallbackQuery';
-import { sendInlineKeyboard } from '@/utils/telegram/sendInlineKeyboard';
+import { sendStartInlineKeyboard } from '@/utils/telegram/sendStartInlineKeyboard';
 import { NextResponse, NextRequest } from 'next/server';
 import TelegramBot from 'node-telegram-bot-api';
 
@@ -21,10 +21,15 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     const {
       chat: { id: chatId },
       text,
+      reply_to_message: replyToMessage,
     } = body.message;
     if (text === '/start') {
-      sendInlineKeyboard(bot, chatId);
+      sendStartInlineKeyboard(bot, chatId);
     }
+    if (replyToMessage?.text === 'Введіть пароль будь-ласка:') {
+      validatePassword(bot, chatId, text);
+    }
+    console.log('body in body.message:', body);
   }
 
   if (body['callback_query']) {
@@ -41,6 +46,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         removeUserFromDB(user, bot);
         break;
       default:
+        console.log('data in case:', data);
         break;
     }
   }

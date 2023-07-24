@@ -2,7 +2,7 @@ import { TMongoDBUser } from '@/interfaces/mongo';
 import TelegramBot from 'node-telegram-bot-api';
 import { sendPasswordInlineKeyboard } from '../telegram/sendPasswordInlineKeyboard';
 
-export const addUserToDB = async (
+export const validatePassword = async (
   user: TMongoDBUser,
   bot: TelegramBot | null
 ) => {
