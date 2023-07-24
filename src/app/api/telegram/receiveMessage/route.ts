@@ -15,7 +15,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   bot = bot
     ? bot
     : new TelegramBot(process.env.TELEGRAM_BOT!, {
-        polling: false,
+        webHook: true,
       });
 
   // await bot.deleteWebHook();
