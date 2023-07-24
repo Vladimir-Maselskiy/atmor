@@ -19,10 +19,7 @@ export const addUserToDB = async (
 
     if (res.status !== 200 || !userFromDB?.isActive) {
       try {
-        sendPasswordInlineKeyboard(bot, userFromDB.userID);
-        // const url = `${process.env.NEXT_PUBLIC_API_HOST}/users/add`;
-        // await fetch(url, options);
-        // bot?.sendMessage(user.userID, 'Підписка на розсилку ввімнута!');
+        sendPasswordInlineKeyboard(bot, user.userID);
       } catch (error) {}
     } else {
       bot?.sendMessage(user.userID, 'Підписка вже ввімнута!');

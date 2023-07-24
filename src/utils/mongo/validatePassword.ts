@@ -12,7 +12,7 @@ export const validatePassword = async (
     return;
   }
 
-  const url = `${process.env.NEXT_PUBLIC_API_HOST}/users/add`;
+  const url = `${process.env.NEXT_PUBLIC_API_HOST}/users`;
   user.isActive = true;
 
   const options = {
@@ -20,11 +20,16 @@ export const validatePassword = async (
     body: JSON.stringify(user),
   };
   try {
-    const res = await fetch(url, options);
+    const { status } = await fetch(`${url}/findOne`, options);
+    if (status !== 404) {
+      bot?.sendMessage(user.userID, 'Підписка вже ввімнута!');
+      return;
+    }
+    const res = await fetch(`${url}/add`, options);
     const { user: userFromDB } = (await res.json()) as { user: TMongoDBUser };
 
     if (res.status === 200 && userFromDB?.isActive) {
-      bot?.sendMessage(userFromDB.userID, 'Підписка на розсилку ввімнута!');
+      bot?.sendMessage(user.userID, 'Підписку налаштовано!');
     }
   } catch (error) {}
 };
