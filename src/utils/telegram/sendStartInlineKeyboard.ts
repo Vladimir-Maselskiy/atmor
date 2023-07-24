@@ -15,9 +15,10 @@ export const sendStartInlineKeyboard = async (
     inline_keyboard: buttons,
   };
   try {
-    await bot?.sendMessage(chatId, messageText, {
+    const res = await bot?.sendMessage(chatId, messageText, {
       reply_markup: inlineKeyboard,
     });
+    console.log('res', res);
     console.log('after bot?.sendMessage');
   } catch (error) {
     console.log('error in sendStartInlineKeyboard', error);
