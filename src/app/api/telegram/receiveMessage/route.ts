@@ -15,7 +15,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   bot = bot
     ? bot
     : new TelegramBot(process.env.TELEGRAM_BOT!, {
-        polling: false,
+        polling: true,
       });
 
   const webhookUrl = 'https://atmor.vercel.app/api/telegram/receiveMessage'; // Adjust the path according to your app's structure
