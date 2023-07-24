@@ -15,13 +15,9 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   bot = bot
     ? bot
     : new TelegramBot(process.env.TELEGRAM_BOT!, {
-        // new TelegramBot('123546', {
         polling: false,
       });
-  console.log(
-    'typeof sendStartInlineKeyboard:',
-    typeof sendStartInlineKeyboard
-  );
+
   if (body.message) {
     const {
       chat: { id: chatId },
@@ -29,7 +25,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       reply_to_message: replyToMessage,
       from,
     } = body.message;
-    console.log("text === '/start': ", text === '/start');
     if (text === '/start') {
       sendStartInlineKeyboard(bot, chatId);
     }
