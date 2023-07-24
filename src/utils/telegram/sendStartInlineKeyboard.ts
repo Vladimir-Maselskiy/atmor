@@ -26,6 +26,7 @@ export const sendStartInlineKeyboard = async (
       //   reply_markup: inlineKeyboard,
       // }
     );
+    console.log('after bot?.sendMessage');
   } catch (error) {
     console.log('error in sendStartInlineKeyboard', error);
   }
