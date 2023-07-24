@@ -45,6 +45,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     const user = getUserFromCallbackQuery(from);
     switch (data) {
       case 'signIn':
+        console.log('signIn');
         addUserToDB(user, bot);
         break;
       case 'logOut':

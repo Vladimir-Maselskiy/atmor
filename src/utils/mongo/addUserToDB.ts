@@ -13,6 +13,8 @@ export const addUserToDB = async (
     body: JSON.stringify(user),
   };
   try {
+    console.log('res = await fetch(url, options');
+
     const res = await fetch(url, options);
     const { user: userFromDB } = (await res.json()) as { user: TMongoDBUser };
     console.log('userFromDB in addUserToDB', userFromDB);
