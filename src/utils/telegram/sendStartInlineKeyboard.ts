@@ -14,17 +14,15 @@ export const sendStartInlineKeyboard = async (
   const inlineKeyboard = {
     inline_keyboard: buttons,
   };
-  if (bot) {
-    console.log('In sendStartInlineKeyboard in if bot block');
-    console.log('chatId', chatId);
-    console.log('messageText', messageText);
+  console.log('In sendStartInlineKeyboard in if bot block');
+  console.log('chatId', chatId);
+  console.log('messageText', messageText);
 
-    await bot.sendMessage(
-      chatId,
-      messageText
-      //    {
-      //   reply_markup: inlineKeyboard,
-      // }
-    );
-  }
+  await bot?.sendMessage(
+    chatId,
+    messageText
+    //    {
+    //   reply_markup: inlineKeyboard,
+    // }
+  );
 };
