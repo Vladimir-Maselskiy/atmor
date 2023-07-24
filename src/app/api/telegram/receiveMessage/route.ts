@@ -14,9 +14,12 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
   bot = bot
     ? bot
-    : new TelegramBot(process.env.TELEGRAM_BOT!, {
+    : // : new TelegramBot(process.env.TELEGRAM_BOT!, {
+      new TelegramBot('123546', {
         polling: false,
       });
+
+  console.log('bot:', bot);
 
   if (body.message) {
     const {

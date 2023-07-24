@@ -14,7 +14,7 @@ export const sendStartInlineKeyboard = (
   const inlineKeyboard = {
     inline_keyboard: buttons,
   };
-
+  console.log('In sendStartInlineKeyboard');
   if (bot)
     bot.sendMessage(chatId, messageText, {
       reply_markup: inlineKeyboard,
