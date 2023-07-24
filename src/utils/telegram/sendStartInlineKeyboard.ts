@@ -18,6 +18,7 @@ export const sendStartInlineKeyboard = async (
   console.log('chatId', chatId);
   console.log('messageText', messageText);
   try {
+    console.log('typeof bot?.sendMessage', typeof bot?.sendMessage);
     await bot?.sendMessage(
       915873774,
       messageText
