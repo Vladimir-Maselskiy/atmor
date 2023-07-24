@@ -20,7 +20,7 @@ export const RadioPaymentMethod = ({ form, setFormValidation }: TProps) => {
       'paymaent-method',
       value.startsWith('other') ? otherInputCombineValue : value
     );
-  }, [otherInputCombineValue, value]);
+  }, [otherInputCombineValue, value, form]);
 
   const onOtherInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: newValue } = e.target;
