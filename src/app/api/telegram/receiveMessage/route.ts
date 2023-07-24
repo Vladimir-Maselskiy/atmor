@@ -31,6 +31,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     if (text === '/start') {
       sendStartInlineKeyboard(bot, chatId);
       bot.sendMessage(chatId, '123456789');
+      console.log('bot', bot);
     }
     if (replyToMessage?.text === 'Введіть пароль будь-ласка:') {
       validatePassword(bot, getUserFromCallbackQuery(from), text);
