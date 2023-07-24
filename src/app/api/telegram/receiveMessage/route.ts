@@ -15,10 +15,10 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   bot = bot
     ? bot
     : new TelegramBot(process.env.TELEGRAM_BOT!, {
-        polling: true,
+        polling: false,
       });
 
-  await bot.deleteWebHook();
+  // await bot.deleteWebHook();
 
   if (body.message) {
     const {
@@ -29,7 +29,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     } = body.message;
     if (text === '/start') {
       sendStartInlineKeyboard(bot, chatId);
-      bot.sendMessage(chatId, '123456789');
       console.log('bot', bot);
     }
     if (replyToMessage?.text === 'Введіть пароль будь-ласка:') {
