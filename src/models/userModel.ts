@@ -22,7 +22,7 @@ const userSchema = new Schema(
 
     isActive: {
       type: Boolean,
-      default: false,
+      required: [true, 'isActive is required'],
     },
   },
   { versionKey: false, timestamps: true }

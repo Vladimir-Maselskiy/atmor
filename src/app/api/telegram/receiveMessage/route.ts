@@ -1,6 +1,7 @@
 import { ITelegramUpdate, ITelegramUser } from '@/interfaces/telegram';
 import { addUserToDB } from '@/utils/mongo/addUserToDB';
 import { removeUserFromDB } from '@/utils/mongo/removeUserFromDB';
+import { validatePassword } from '@/utils/mongo/validatePassword';
 import { getUserFromCallbackQuery } from '@/utils/telegram/getUserFromCallbackQuery';
 import { sendStartInlineKeyboard } from '@/utils/telegram/sendStartInlineKeyboard';
 import { NextResponse, NextRequest } from 'next/server';
@@ -22,12 +23,13 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       chat: { id: chatId },
       text,
       reply_to_message: replyToMessage,
+      from,
     } = body.message;
     if (text === '/start') {
       sendStartInlineKeyboard(bot, chatId);
     }
     if (replyToMessage?.text === 'Введіть пароль будь-ласка:') {
-      validatePassword(bot, chatId, text);
+      validatePassword(bot, getUserFromCallbackQuery(from), text);
     }
     console.log('body in body.message:', body);
   }
