@@ -11,10 +11,9 @@ export const sendPasswordInlineKeyboard = (
   bot: TelegramBot | null,
   chatId: number
 ) => {
-  if (bot)
-    bot.sendMessage(chatId, 'Введіть пароль будь-ласка:', {
-      reply_markup: {
-        force_reply: true,
-      },
-    });
+  bot?.sendMessage(chatId, 'Введіть пароль будь-ласка:', {
+    reply_markup: {
+      force_reply: true,
+    },
+  });
 };

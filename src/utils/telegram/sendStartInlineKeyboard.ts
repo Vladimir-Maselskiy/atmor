@@ -19,8 +19,12 @@ export const sendStartInlineKeyboard = async (
     console.log('chatId', chatId);
     console.log('messageText', messageText);
 
-    await bot.sendMessage(chatId, messageText, {
-      reply_markup: inlineKeyboard,
-    });
+    await bot.sendMessage(
+      chatId,
+      messageText
+      //    {
+      //   reply_markup: inlineKeyboard,
+      // }
+    );
   }
 };
