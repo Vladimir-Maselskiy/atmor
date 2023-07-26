@@ -2,21 +2,16 @@ import { ITelegramUpdate, ITelegramUser } from '@/interfaces/telegram';
 import { addUserToDB } from '@/utils/mongo/addUserToDB';
 import { removeUserFromDB } from '@/utils/mongo/removeUserFromDB';
 import { validatePassword } from '@/utils/mongo/validatePassword';
+import { createTelegramBot } from '@/utils/telegram/createTelegramBot';
 import { getUserFromCallbackQuery } from '@/utils/telegram/getUserFromCallbackQuery';
 import { sendStartInlineKeyboard } from '@/utils/telegram/sendStartInlineKeyboard';
 import { NextResponse, NextRequest } from 'next/server';
 import TelegramBot from 'node-telegram-bot-api';
 
-let bot: TelegramBot | null = null;
-
 export const POST = async (req: NextRequest, res: NextResponse) => {
   const body: ITelegramUpdate = await req.json();
 
-  bot = bot
-    ? bot
-    : new TelegramBot(process.env.TELEGRAM_BOT!, {
-        webHook: true,
-      });
+  const bot = createTelegramBot();
 
   // await bot.deleteWebHook();
 

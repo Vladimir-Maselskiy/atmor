@@ -2,16 +2,15 @@ import { ICartItem, TPaymemtMethod } from '@/interfaces/interfaces';
 import { TMongoDBUser } from '@/interfaces/mongo';
 import { getMessageForTelegramBot } from '@/utils/getMessageForTelegramBot';
 import { getTotalCartCost } from '@/utils/getTotalCartCost';
+import { createTelegramBot } from '@/utils/telegram/createTelegramBot';
 import { NextApiResponse } from 'next';
 import { NextResponse, NextRequest } from 'next/server';
 import TelegramBot from 'node-telegram-bot-api';
 
 export const POST = async (req: NextRequest, res: NextApiResponse) => {
   const { values, cart }: { values: any; cart: ICartItem[] } = await req.json();
-  let bot: TelegramBot | null = new TelegramBot(process.env.TELEGRAM_BOT!, {
-    polling: false,
-  });
 
+  const bot = createTelegramBot();
   const url = `${process.env.NEXT_PUBLIC_API_HOST}/users/getAllUsers`;
   const message = getMessageForTelegramBot(values, cart);
   const { users }: { users: TMongoDBUser[] } = await fetch(url).then(res =>
