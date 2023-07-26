@@ -12,6 +12,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   const body: ITelegramUpdate = await req.json();
 
   const bot = createTelegramBot();
+  console.log('bot', bot);
 
   // await bot.deleteWebHook();
 

@@ -6,6 +6,6 @@ export const createTelegramBot = () => {
   return (bot = bot
     ? bot
     : new TelegramBot(process.env.TELEGRAM_BOT!, {
-        polling: true,
+        webHook: true,
       }));
 };
