@@ -1,18 +1,18 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { FieldWrapper, StyledForm, StyledInput } from './UserForm.styled';
-import { Button, Divider, Form, FormInstance, InputRef } from 'antd';
+import { Button, Divider, Form, InputRef } from 'antd';
 import { getAutoCompletedPhoneValue } from '@/utils/getAutoCompletedPhoneValue';
 import { Box } from '../Box/Box';
-
 import { SearchCityInput } from '../SearchCityInput/SearchCityInput';
 import { SearchWarehousesInput } from '../SearchWarehousesInput/SearchWarehousesInput';
 import { OrderList } from '../OrderList/OrderList';
 import { getIsFormSubmitDisabled } from '@/utils/getIsFormSubmitDisabled';
-import { style } from 'styled-system';
 import { RadioPaymentMethod } from '../RadioPaymentMethod/RadioPaymentMethod';
 import { useCartContext } from '@/context/state';
 import { getMessageForTelegramBot } from '@/utils/getMessageForTelegramBot';
+import { availableUkraineOperatorsCodes } from '@/data/availableUkraineOperatorsCodes';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -34,29 +34,11 @@ const initialFormValidation = {
 
 export type TFormValidatonType = typeof initialFormValidation;
 
-const availableUkraineOperatorsCodes = [
-  '039',
-  '050',
-  '063',
-  '066',
-  '067',
-  '068',
-  '091',
-  '092',
-  '093',
-  '094',
-  '095',
-  '096',
-  '097',
-  '098',
-  '099',
-];
-
 export const UserForm = () => {
   const ref = useRef<HTMLButtonElement>(null);
   const phoneInputRef = useRef<InputRef>(null);
   const { cart } = useCartContext();
-
+  const router = useRouter();
   const [form] = Form.useForm();
 
   const [validateTrigger, setValidateTrigger] = useState(triggers);
@@ -117,7 +99,8 @@ export const UserForm = () => {
       .then(res => res.json())
       .catch(console.log);
 
-    console.log(res);
+    localStorage.setItem('cart', JSON.stringify([]));
+    router.push('./thanks-page');
   };
 
   const validateNameAndSurName = (formField: any, value: any) => {
