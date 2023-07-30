@@ -37,7 +37,7 @@ export type TFormValidatonType = typeof initialFormValidation;
 export const UserForm = () => {
   const ref = useRef<HTMLButtonElement>(null);
   const phoneInputRef = useRef<InputRef>(null);
-  const { cart } = useCartContext();
+  const { cart, setCart } = useCartContext();
   const router = useRouter();
   const [form] = Form.useForm();
 
@@ -99,6 +99,7 @@ export const UserForm = () => {
       .then(res => res.json())
       .catch(console.log);
 
+    setCart([]);
     localStorage.setItem('cart', JSON.stringify([]));
     router.push('./thanks-page');
   };
