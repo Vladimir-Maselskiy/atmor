@@ -1,11 +1,10 @@
 import React from 'react';
-import { Box } from '../Box/Box';
 import {
+  StyledWrapper,
   StyledImage,
   StyledSolutionText,
-  StyledWrapper,
 } from './HomeSolutionNav.styled';
-import { justifyContent } from 'styled-system';
+import { Box } from '../Box/Box';
 
 export const HomeSolutionNav = () => {
   return (

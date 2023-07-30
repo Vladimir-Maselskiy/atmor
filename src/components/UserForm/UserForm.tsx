@@ -12,6 +12,7 @@ import { getIsFormSubmitDisabled } from '@/utils/getIsFormSubmitDisabled';
 import { style } from 'styled-system';
 import { RadioPaymentMethod } from '../RadioPaymentMethod/RadioPaymentMethod';
 import { useCartContext } from '@/context/state';
+import { getMessageForTelegramBot } from '@/utils/getMessageForTelegramBot';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -102,11 +103,14 @@ export const UserForm = () => {
   };
 
   const onFinish = async (values: unknown) => {
-    const url = `${process.env.NEXT_PUBLIC_API_HOST}/telegram/sendMessage`;
+    const url = `https://atmor-telegram-bot.vercel.app/api`;
 
     const options = {
       method: 'POST',
-      body: JSON.stringify({ values, cart }),
+      body: JSON.stringify({
+        message: getMessageForTelegramBot(values, cart),
+        fromSite: true,
+      }),
     };
 
     const res = await fetch(url, options)
@@ -305,11 +309,6 @@ export const UserForm = () => {
         <FieldWrapper
           name="paymaent-method"
           label="Спосіб оплати"
-          // rules={[
-          //   {
-          //     required: true,
-          //   },
-          // ]}
           style={{ marginTop: 20 }}
           initialValue={'upon receipt'}
         >
