@@ -7,6 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 import { ConfigProvider, Layout } from 'antd';
 import { Header } from '@/components/Header/Header';
 import { CartWrapper } from '@/context/state';
+import StyledComponentsRegistry from '@/lib/registry';
 
 // export const metadata = {
 //   title: 'Create Next App',
@@ -42,12 +43,14 @@ export default function RootLayout({
           }}
         >
           <body className={inter.className}>
-            <Layout
-              style={{ minWidth: 290, width: '100%', minHeight: '100vh' }}
-            >
-              <Header />
-              {children}
-            </Layout>
+            <StyledComponentsRegistry>
+              <Layout
+                style={{ minWidth: 290, width: '100%', minHeight: '100vh' }}
+              >
+                <Header />
+                {children}
+              </Layout>
+            </StyledComponentsRegistry>
           </body>
         </ConfigProvider>
       </CartWrapper>
