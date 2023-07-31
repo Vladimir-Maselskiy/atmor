@@ -13,6 +13,7 @@ import { RadioPaymentMethod } from '../RadioPaymentMethod/RadioPaymentMethod';
 import { useCartContext } from '@/context/state';
 import { getMessageForTelegramBot } from '@/utils/getMessageForTelegramBot';
 import { availableUkraineOperatorsCodes } from '@/data/availableUkraineOperatorsCodes';
+import { Spinner } from '../Spinner/Spinner';
 
 type TTgiggerTypes = 'onBlur' | 'onChange';
 
@@ -48,6 +49,7 @@ export const UserForm = () => {
   const [cityRef, setCityRef] = useState('');
   const [isFormSubmitDisabled, setIsFormSubmitDisabled] = useState(true);
   const [formValidation, setFormValidation] = useState(initialFormValidation);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (isDeleting) {
@@ -95,9 +97,15 @@ export const UserForm = () => {
       }),
     };
 
+    setIsLoading(true);
     const res = await fetch(url, options)
-      .then(res => res.json())
-      .catch(console.log);
+      .then(res => {
+        return res.json();
+      })
+      .catch(console.log)
+      .finally(() => {
+        setIsLoading(false);
+      });
 
     setCart([]);
     localStorage.setItem('cart', JSON.stringify([]));
@@ -175,144 +183,147 @@ export const UserForm = () => {
   };
 
   return (
-    <StyledForm layout="vertical" form={form} onFinish={onFinish}>
-      <Box>
-        <FieldWrapper
-          name="user-phone"
-          label="Номер телефону"
-          validateTrigger={[validateTrigger.phone]}
-          rules={[{ required: true, validator: validatePhone }]}
-        >
-          <StyledInput
-            ref={phoneInputRef}
-            placeholder="Введіть номер телефону"
-            onChange={onPhoneChange}
-          ></StyledInput>
-        </FieldWrapper>
-
-        <Box display="flex" gridGap={40}>
+    <>
+      {isLoading && <Spinner />}
+      <StyledForm layout="vertical" form={form} onFinish={onFinish}>
+        <Box>
           <FieldWrapper
-            name="user-name"
-            label="Ім'я"
-            validateTrigger={[validateTrigger.name]}
+            name="user-phone"
+            label="Номер телефону"
+            validateTrigger={[validateTrigger.phone]}
+            rules={[{ required: true, validator: validatePhone }]}
+          >
+            <StyledInput
+              ref={phoneInputRef}
+              placeholder="Введіть номер телефону"
+              onChange={onPhoneChange}
+            ></StyledInput>
+          </FieldWrapper>
+
+          <Box display="flex" gridGap={40}>
+            <FieldWrapper
+              name="user-name"
+              label="Ім'я"
+              validateTrigger={[validateTrigger.name]}
+              rules={[
+                {
+                  required: true,
+                  validator: validateNameAndSurName,
+                },
+              ]}
+            >
+              <StyledInput
+                placeholder="Введіть ваше ім'я"
+                onChange={() => {
+                  setIsFormSubmitDisabled(true);
+                }}
+              ></StyledInput>
+            </FieldWrapper>
+
+            <FieldWrapper
+              name="user-surname"
+              label="Прізвище"
+              validateTrigger={[validateTrigger.surname]}
+              rules={[
+                {
+                  required: true,
+                  validator: validateNameAndSurName,
+                },
+              ]}
+            >
+              <StyledInput
+                placeholder="Введіть ваше прізвище"
+                onChange={() => {
+                  setIsFormSubmitDisabled(true);
+                }}
+              ></StyledInput>
+            </FieldWrapper>
+          </Box>
+          <FieldWrapper
+            name="user-email"
+            label="Email адреса"
+            validateTrigger={[validateTrigger.email]}
             rules={[
               {
                 required: true,
-                validator: validateNameAndSurName,
+                validator: validateEmail,
               },
             ]}
           >
             <StyledInput
-              placeholder="Введіть ваше ім'я"
+              placeholder="Введіть ваш email"
               onChange={() => {
                 setIsFormSubmitDisabled(true);
               }}
             ></StyledInput>
           </FieldWrapper>
 
+          <Divider />
+
+          <p>Відомості щодо доставки</p>
           <FieldWrapper
-            name="user-surname"
-            label="Прізвище"
-            validateTrigger={[validateTrigger.surname]}
+            name="user-city"
+            label="Населений пункт"
+            validateTrigger="onChange"
+            style={{ marginTop: 20 }}
             rules={[
               {
                 required: true,
-                validator: validateNameAndSurName,
+                validator: validateCity,
               },
             ]}
           >
-            <StyledInput
-              placeholder="Введіть ваше прізвище"
-              onChange={() => {
-                setIsFormSubmitDisabled(true);
-              }}
-            ></StyledInput>
-          </FieldWrapper>
-        </Box>
-        <FieldWrapper
-          name="user-email"
-          label="Email адреса"
-          validateTrigger={[validateTrigger.email]}
-          rules={[
-            {
-              required: true,
-              validator: validateEmail,
-            },
-          ]}
-        >
-          <StyledInput
-            placeholder="Введіть ваш email"
-            onChange={() => {
-              setIsFormSubmitDisabled(true);
-            }}
-          ></StyledInput>
-        </FieldWrapper>
-
-        <Divider />
-
-        <p>Відомості щодо доставки</p>
-        <FieldWrapper
-          name="user-city"
-          label="Населений пункт"
-          validateTrigger="onChange"
-          style={{ marginTop: 20 }}
-          rules={[
-            {
-              required: true,
-              validator: validateCity,
-            },
-          ]}
-        >
-          <SearchCityInput
-            setCityRef={setCityRef}
-            form={form}
-            setFormValidation={setFormValidation}
-          />
-        </FieldWrapper>
-
-        {cityRef && (
-          <FieldWrapper
-            name="user-warehouse"
-            label="Відділення Нової Пошти"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <SearchWarehousesInput
-              cityRef={cityRef}
+            <SearchCityInput
+              setCityRef={setCityRef}
               form={form}
               setFormValidation={setFormValidation}
             />
           </FieldWrapper>
-        )}
-      </Box>
-      <Box>
-        <OrderList />
-        <FieldWrapper
-          name="paymaent-method"
-          label="Спосіб оплати"
-          style={{ marginTop: 20 }}
-          initialValue={'upon receipt'}
-        >
-          <RadioPaymentMethod
-            form={form}
-            setFormValidation={setFormValidation}
-          />
-        </FieldWrapper>
-        <FieldWrapper>
-          <Button
-            disabled={isFormSubmitDisabled}
-            style={{ borderRadius: 0, marginTop: 20 }}
-            type="primary"
-            htmlType="submit"
-            ref={ref}
+
+          {cityRef && (
+            <FieldWrapper
+              name="user-warehouse"
+              label="Відділення Нової Пошти"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <SearchWarehousesInput
+                cityRef={cityRef}
+                form={form}
+                setFormValidation={setFormValidation}
+              />
+            </FieldWrapper>
+          )}
+        </Box>
+        <Box>
+          <OrderList />
+          <FieldWrapper
+            name="paymaent-method"
+            label="Спосіб оплати"
+            style={{ marginTop: 20 }}
+            initialValue={'upon receipt'}
           >
-            Підтвердити
-          </Button>
-        </FieldWrapper>
-      </Box>
-    </StyledForm>
+            <RadioPaymentMethod
+              form={form}
+              setFormValidation={setFormValidation}
+            />
+          </FieldWrapper>
+          <FieldWrapper>
+            <Button
+              disabled={isFormSubmitDisabled}
+              style={{ borderRadius: 0, marginTop: 20 }}
+              type="primary"
+              htmlType="submit"
+              ref={ref}
+            >
+              Підтвердити
+            </Button>
+          </FieldWrapper>
+        </Box>
+      </StyledForm>
+    </>
   );
 };
