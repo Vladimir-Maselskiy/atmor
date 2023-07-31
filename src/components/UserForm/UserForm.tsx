@@ -87,13 +87,10 @@ export const UserForm = () => {
   };
 
   const onFinish = async (values: unknown) => {
-    const url = `https://atmor-telegram-bot.vercel.app/api`;
+    const url = `${process.env.NEXT_PUBLIC_API_HOST}/telegram/sendMessage`;
 
     const options = {
       method: 'POST',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
       body: JSON.stringify({
         message: getMessageForTelegramBot(values, cart),
         fromSite: true,
