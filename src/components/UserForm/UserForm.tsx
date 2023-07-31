@@ -91,6 +91,9 @@ export const UserForm = () => {
 
     const options = {
       method: 'POST',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
       body: JSON.stringify({
         message: getMessageForTelegramBot(values, cart),
         fromSite: true,
