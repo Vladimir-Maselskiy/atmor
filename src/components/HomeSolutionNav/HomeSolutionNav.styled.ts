@@ -4,6 +4,13 @@ interface Props {
   position: number;
 }
 
+export const ImageWrapper = styled.div`
+  position: relative;
+  aspect-ratio: 1.1857/1;
+  max-width: 600px;
+  width: 80%;
+`;
+
 export const StyledImage = styled.img<Props>`
   position: absolute;
   width: 50%;

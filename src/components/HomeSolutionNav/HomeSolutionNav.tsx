@@ -4,6 +4,7 @@ import {
   StyledWrapper,
   StyledImage,
   StyledSolutionText,
+  ImageWrapper,
 } from './HomeSolutionNav.styled';
 import { Box } from '../Box/Box';
 
@@ -11,13 +12,7 @@ export const HomeSolutionNav = () => {
   return (
     <StyledWrapper>
       <StyledSolutionText>ОБЕРИ СВІЙ</StyledSolutionText>
-      <Box
-        width={600}
-        maxWidth={600}
-        minWidth={600}
-        height={506}
-        position="relative"
-      >
+      <ImageWrapper>
         <StyledImage
           src="/top-right-activ.png"
           alt="sink-applications-colored"
@@ -58,7 +53,7 @@ export const HomeSolutionNav = () => {
           alt="shower-applications"
           position={4}
         />
-      </Box>
+      </ImageWrapper>
       <StyledSolutionText>ATMOR</StyledSolutionText>
     </StyledWrapper>
   );
