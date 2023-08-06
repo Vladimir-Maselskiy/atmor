@@ -1,29 +1,67 @@
-import React from 'react';
-import { Box } from '../Box/Box';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import { Twirl as Hamburger } from 'hamburger-react';
 import { HomeFilled } from '@ant-design/icons';
-import { StyledLink } from './NavBar.styled';
+import { StyledNavBar, StyledLink, LinkWrapper } from './NavBar.styled';
+import { useMediaQuery } from '@/hooks';
 
 export const NavBar = () => {
+  const isMoreThan768 = useMediaQuery(768);
+  console.log('isMoreThan768', isMoreThan768);
+  const [isBurgerToggled, setIsBurgerToggled] = useState(false);
+  const [isShowNavBar, setIsShowNavbar] = useState(
+    isBurgerToggled || isMoreThan768
+  );
+
+  useEffect(() => {
+    if (isBurgerToggled || isMoreThan768) {
+      setIsShowNavbar(true);
+    } else {
+      setIsShowNavbar(false);
+    }
+  }, [isMoreThan768]);
+
+  useEffect(() => {
+    if (isBurgerToggled && !isMoreThan768) {
+      setIsShowNavbar(true);
+    } else {
+      setIsShowNavbar(false);
+    }
+  }, [isBurgerToggled]);
+
+  const onHumburgerToggle = (isToggled: boolean) => {
+    setIsBurgerToggled(isToggled);
+  };
+
+  const onLinkWrapperClick = () => {
+    if (isBurgerToggled) {
+      setIsBurgerToggled(false);
+      setIsShowNavbar(false);
+    }
+  };
+
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      height={35}
-      maxHeight="35px"
-      justifyContent="center"
-      backgroundColor="var(--accent-color)"
-      borderBottom="1px solid var(--text-color)"
-    >
-      <StyledLink href="/">
-        <HomeFilled />
-      </StyledLink>
-      <StyledLink href="/products">ПРОДУКТИ</StyledLink>
-      <StyledLink href="/why-atmor">ЧОМУ ATMOR</StyledLink>
-      <StyledLink href="/description">ЗАСТОСУНОК</StyledLink>
-      <StyledLink href="/instruction">ІНСТРУКЦІЇ</StyledLink>
-      <StyledLink href="/service">СЕРВІС</StyledLink>
-      <StyledLink href="/contacts">КОНТАКТИ</StyledLink>
-    </Box>
+    <StyledNavBar>
+      {isShowNavBar ? (
+        <LinkWrapper onClick={onLinkWrapperClick}>
+          <StyledLink href="/">
+            <HomeFilled />
+          </StyledLink>
+          <StyledLink href="/products">ПРОДУКТИ</StyledLink>
+          <StyledLink href="/why-atmor">ЧОМУ ATMOR</StyledLink>
+          <StyledLink href="/description">ЗАСТОСУНОК</StyledLink>
+          <StyledLink href="/instruction">ІНСТРУКЦІЇ</StyledLink>
+          <StyledLink href="/service">СЕРВІС</StyledLink>
+          <StyledLink href="/contacts">КОНТАКТИ</StyledLink>
+        </LinkWrapper>
+      ) : null}
+      {!isMoreThan768 && (
+        <Hamburger
+          toggled={isBurgerToggled}
+          size={20}
+          color="var(--white-color)"
+          onToggle={onHumburgerToggle}
+        />
+      )}
+    </StyledNavBar>
   );
 };
