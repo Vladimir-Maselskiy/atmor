@@ -4,8 +4,11 @@ import { Box } from '../Box/Box';
 import { Logo, LogoText } from '../Logo/Logo';
 import { NavBar } from '../NavBar/NavBar';
 import { NavCart } from '../NavCart/NavCart';
+import { useMediaQuery, useWindowWidth } from '@/hooks';
 
 export const Header = () => {
+  const isLogoText = useMediaQuery(890);
+
   return (
     <Box
       width="100vw"
@@ -19,10 +22,11 @@ export const Header = () => {
         alignItems="center"
         justifyContent="space-between"
         padding="0 25px 0 20px"
-        minHeight={80}
+        height={80}
+        maxHeight={80}
       >
         <Logo />
-        <LogoText />
+        {isLogoText && <LogoText />}
         <NavCart />
       </Box>
       <NavBar />

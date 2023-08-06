@@ -9,7 +9,8 @@ export const NavBar = () => {
     <Box
       display="flex"
       alignItems="center"
-      minHeight="35px"
+      height={35}
+      maxHeight="35px"
       justifyContent="center"
       backgroundColor="var(--accent-color)"
       borderBottom="1px solid var(--text-color)"

@@ -13,6 +13,7 @@ export const Slider = () => {
       style={{
         width: '100%',
         aspectRatio: 2.65 / 1,
+        minHeight: 329,
       }}
       effect={'fade'}
       //   spaceBetween={30}
