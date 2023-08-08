@@ -24,6 +24,7 @@ export const Header = () => {
         padding="0 25px 0 20px"
         height={80}
         maxHeight={80}
+        backgroundColor="var(--grey-background-color);"
       >
         <Logo />
         {isLogoText && <LogoText />}

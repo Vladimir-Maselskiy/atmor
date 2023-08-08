@@ -1,6 +1,10 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
+type TLinkWrapperProps = {
+  isShowNavBar: boolean;
+};
+
 export const StyledNavBar = styled.div`
   position: relative;
   display: flex;
@@ -13,17 +17,20 @@ export const StyledNavBar = styled.div`
     justify-content: end;
   }
 `;
-export const LinkWrapper = styled.div`
+export const LinkWrapper = styled.div<TLinkWrapperProps>`
   display: flex;
   width: 100%;
   justify-content: center;
   @media screen and (max-width: 768px) {
     position: absolute;
-    top: 35px;
+    z-index: -1;
+    bottom: 0px;
+    transform: ${p => (p.isShowNavBar ? 'translateY(100%)' : 'translateY(0%)')};
     right: 0;
     flex-direction: column;
     align-items: center;
     width: 150px;
+    transition: transform 0.5s ease-in-out;
   }
 `;
 

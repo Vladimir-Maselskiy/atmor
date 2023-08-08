@@ -41,8 +41,8 @@ export const NavBar = () => {
 
   return (
     <StyledNavBar>
-      {isShowNavBar ? (
-        <LinkWrapper onClick={onLinkWrapperClick}>
+      
+        <LinkWrapper onClick={onLinkWrapperClick} isShowNavBar={isShowNavBar}>
           <StyledLink href="/">
             <HomeFilled />
           </StyledLink>
@@ -53,7 +53,7 @@ export const NavBar = () => {
           <StyledLink href="/service">СЕРВІС</StyledLink>
           <StyledLink href="/contacts">КОНТАКТИ</StyledLink>
         </LinkWrapper>
-      ) : null}
+     
       {!isMoreThan768 && (
         <Hamburger
           toggled={isBurgerToggled}
