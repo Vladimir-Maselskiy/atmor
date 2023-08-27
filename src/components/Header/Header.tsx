@@ -12,6 +12,7 @@ export const Header = () => {
   return (
     <Box
       width="100vw"
+      minWidth={290}
       position="fixed"
       zIndex={3}
       backgroundColor="var(--grey-background-color)"

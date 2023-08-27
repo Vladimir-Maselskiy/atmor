@@ -2,20 +2,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { StyledLogoText } from './Logo.styled';
-import { marginLeft } from 'styled-system';
+import { StyledLink, StyledLogoText } from './Logo.styled';
 
 export const Logo = () => {
   return (
-    <Link href="/">
+    <StyledLink href="/">
       <Image
         src="/logo-removebg.png"
         alt="logo"
-        width={334}
-        height={74}
         style={{ transform: 'translateY(3px)' }}
+        fill
       />
-    </Link>
+    </StyledLink>
   );
 };
 export const LogoText = () => {
