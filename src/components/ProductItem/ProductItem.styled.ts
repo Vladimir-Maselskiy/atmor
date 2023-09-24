@@ -18,4 +18,25 @@ export const StyledPrice = styled.p`
 
 export const StyledItem = styled.li`
   margin: 0 auto;
+  @media screen and (max-width: 768px) {
+    padding-top: 40px;
+  }
+  @media screen and (max-width: 572px) {
+    margin: 0 50px;
+  }
+`;
+
+export const StyledItemContent = styled.div`
+  display: flex;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+export const StyledImageBox = styled.div`
+  position: relative;
+  height: 256px;
+  width: 200px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;

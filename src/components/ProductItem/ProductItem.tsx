@@ -6,7 +6,9 @@ import {
   ModelName,
   ModelTitle,
   PanelText,
+  StyledImageBox,
   StyledItem,
+  StyledItemContent,
   StyledPrice,
 } from './ProductItem.styled';
 import { IAtmorItem, ICartItem } from '@/interfaces/interfaces';
@@ -15,6 +17,7 @@ import { useCartContext } from '@/context/state';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useMediaQuery } from '@/hooks';
 
 const { Panel } = Collapse;
 
@@ -25,6 +28,8 @@ type TProps = {
 export const ProductItem = ({ product }: TProps) => {
   const { options, aditional } = product;
   const { cart, setCart } = useCartContext();
+  const isMoreThan768 = useMediaQuery(768);
+
   const route = useRouter();
 
   useEffect(() => {
@@ -53,50 +58,60 @@ export const ProductItem = ({ product }: TProps) => {
   };
   return (
     <StyledItem>
-      <Box display="flex">
-        <Box>
+      <StyledItemContent>
+        <StyledImageBox>
           <Link href={`/products/${aditional.model}/${options.article}`}>
             <Image
               src={options.firstPhoto}
               alt={`${aditional.model} photo`}
-              width={200}
-              height={256}
               style={{ objectFit: 'contain', objectPosition: 'center' }}
+              fill
             />
           </Link>
-        </Box>
-        <Box lineHeight={1.5} paddingTop={40} width={500}>
-          <Box marginLeft={116}>
-            <StyledPrice>
-              {getPriceSpacesFormatted(options.price)} грн
-            </StyledPrice>
-            <Button
-              type="primary"
-              style={{
-                backgroundColor: 'var(--accent-color)',
-                fontWeight: 600,
-                boxShadow: 'none',
-                marginTop: 20,
-                width: 140,
-                borderRadius: 0,
-              }}
-              onClick={onBuyButtonCkick}
-            >
-              Купити
-            </Button>
+        </StyledImageBox>
+        <Box
+          lineHeight={1.5}
+          paddingTop={40}
+          width={isMoreThan768 ? 500 : '100%'}
+        >
+          <Box marginLeft={isMoreThan768 ? 116 : 0}>
+            <Box width={140} marginLeft={isMoreThan768 ? 0 : 'auto'}>
+              <StyledPrice>
+                {getPriceSpacesFormatted(options.price)} грн
+              </StyledPrice>
+              <Button
+                type="primary"
+                style={{
+                  backgroundColor: 'var(--accent-color)',
+                  fontWeight: 600,
+                  boxShadow: 'none',
+                  marginTop: 20,
+                  width: 140,
+                  borderRadius: 0,
+                }}
+                onClick={onBuyButtonCkick}
+              >
+                Купити
+              </Button>
+            </Box>
             <ModelName>{aditional.model}</ModelName>
             <ModelTitle>{options.name}</ModelTitle>
           </Box>
           <Collapse
             ghost
-            style={{ marginTop: 20, marginLeft: 100, maxWidth: 300 }}
+            style={{
+              marginTop: 20,
+              marginLeft: 100,
+              maxWidth: 300,
+              overflowX: 'scroll',
+            }}
             size="large"
           >
             <Panel
               header="ХАРАКТЕРИСТИКИ"
               key="1"
               style={{
-                width: 600,
+                width: 300,
               }}
             >
               <Descriptions title="Основні характеристики" column={1}>
@@ -113,7 +128,7 @@ export const ProductItem = ({ product }: TProps) => {
             </Panel>
           </Collapse>
         </Box>
-      </Box>
+      </StyledItemContent>
       <Divider />
     </StyledItem>
   );
