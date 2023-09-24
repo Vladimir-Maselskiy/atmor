@@ -101,7 +101,7 @@ export const ProductItem = ({ product }: TProps) => {
             ghost
             style={{
               marginTop: 20,
-              marginLeft: 100,
+              marginLeft: isMoreThan768 ? 100 : 0,
               maxWidth: 300,
               overflowX: 'scroll',
             }}

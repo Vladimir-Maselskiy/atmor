@@ -8,6 +8,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { Thumbs } from 'swiper';
 import Image from 'next/image';
+import { ProductWithSwiperBox } from './ProductWithSwiper.styled';
+import { useMediaQuery } from '@/hooks';
 
 type TProps = {
   product: IAtmorItem;
@@ -15,9 +17,10 @@ type TProps = {
 
 export const ProductWithSwiper = ({ product }: TProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
+  const isMoreThen560 = useMediaQuery(560);
 
   return (
-    <Box width="520px" p={16}>
+    <ProductWithSwiperBox>
       <Swiper
         style={{
           aspectRatio: 1.5,
@@ -43,7 +46,7 @@ export const ProductWithSwiper = ({ product }: TProps) => {
           style={{
             height: 100,
           }}
-          spaceBetween={50}
+          spaceBetween={isMoreThen560 ? 50 : 10}
           slidesPerView={3}
           modules={[Thumbs]}
           watchSlidesProgress
@@ -64,6 +67,6 @@ export const ProductWithSwiper = ({ product }: TProps) => {
           ))}
         </Swiper>
       </Box>
-    </Box>
+    </ProductWithSwiperBox>
   );
 };

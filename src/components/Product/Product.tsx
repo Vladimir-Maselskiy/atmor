@@ -2,7 +2,12 @@ import { IAtmorItem, ICartItem } from '@/interfaces/interfaces';
 import { ProductWithSwiper } from '../ProductWithSwiper/ProductWithSwiper';
 import { Box } from '../Box/Box';
 import { getPriceSpacesFormatted } from '@/utils/getPriceSpacesFormatted';
-import { DescriptionsBox, StyledPrice } from './Product.styled';
+import {
+  DescriptionsBox,
+  ProductBox,
+  StyledDescriptions,
+  StyledPrice,
+} from './Product.styled';
 import { Button, Descriptions } from 'antd';
 import { useCartContext } from '@/context/state';
 import { useRouter } from 'next/navigation';
@@ -37,12 +42,7 @@ export const Product = ({ product }: TProps) => {
     }, 500);
   };
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      paddingTop={115}
-      maxHeight="100vh"
-    >
+    <ProductBox>
       <ProductWithSwiper product={product} />
       <DescriptionsBox>
         <StyledPrice>{`${getPriceSpacesFormatted(
@@ -62,7 +62,7 @@ export const Product = ({ product }: TProps) => {
         >
           Купити
         </Button>
-        <Box mt={40}>
+        <StyledDescriptions>
           <Descriptions title="Всі характеристики" column={1}>
             <Descriptions.Item label="Назва">{options.name}</Descriptions.Item>
             <Descriptions.Item label="Модель">
@@ -103,8 +103,8 @@ export const Product = ({ product }: TProps) => {
               {`${aditional.weight} кг.`}
             </Descriptions.Item>
           </Descriptions>
-        </Box>
+        </StyledDescriptions>
       </DescriptionsBox>
-    </Box>
+    </ProductBox>
   );
 };
